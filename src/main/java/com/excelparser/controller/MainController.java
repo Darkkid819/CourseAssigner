@@ -117,14 +117,14 @@ public class MainController implements Initializable {
     }
 
     private void updateInstructor() {
-        nameLabel.setText("Name: " + instructors[currentInstructor].getName());
-        idLabel.setText("ID: " + instructors[currentInstructor].getId());
-        rankLabel.setText("Rank: " + instructors[currentInstructor].getRank());
-        homeCampusLabel.setText("Home Campus: " + instructors[currentInstructor].getHomeCampus());
-        preferredCampusLabel.setText("Preferred Campus: " + instructors[currentInstructor].getPreferredCampuses());
-        onlineCertifiedLabel.setText("Online Certified: " + (instructors[currentInstructor].isOnlineCertified() ? "Yes" : "No"));
-        coursesCertifiedLabel.setText("Courses Certified: " + instructors[currentInstructor].getCoursesCertified());
-        coursesRequestedLabel.setText("Courses Requested: " + String.valueOf(instructors[currentInstructor].getCoursesRequested()));
+        nameLabel.setText(instructors[currentInstructor].getName());
+        idLabel.setText(instructors[currentInstructor].getId());
+        rankLabel.setText(instructors[currentInstructor].getRank());
+        homeCampusLabel.setText(instructors[currentInstructor].getHomeCampus());
+        preferredCampusLabel.setText(instructors[currentInstructor].getPreferredCampuses());
+        onlineCertifiedLabel.setText((instructors[currentInstructor].isOnlineCertified() ? "Yes" : "No"));
+        coursesCertifiedLabel.setText(instructors[currentInstructor].getCoursesCertified());
+        coursesRequestedLabel.setText(String.valueOf(instructors[currentInstructor].getCoursesRequested()));
         updateAvailability();
     }
 
@@ -136,9 +136,9 @@ public class MainController implements Initializable {
         for (int slot = 0; slot < timeSlotButtons.length; slot++) {
             for (int day = 0; day < timeSlotButtons[slot].length; day++) {
                 if (availability[slot][day]) {
-                    timeSlotButtons[slot][day].setStyle("-fx-background-color: green;");
+                    timeSlotButtons[slot][day].setStyle("-fx-background-color: #008000;");
                 } else {
-                    timeSlotButtons[slot][day].setStyle("");
+                    timeSlotButtons[slot][day].setStyle("-fx-background-color: #E6E6E6");
                 }
             }
         }

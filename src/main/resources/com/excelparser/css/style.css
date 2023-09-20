@@ -1,0 +1,56 @@
+.root {
+    -fx-background-color: #FFFFFF; /* White background */
+}
+
+.button {
+    -fx-background-color: #F2F2F2; /* Light gray */
+    -fx-text-fill: #000000; /* Black text */
+    -fx-font-size: 14px;
+    -fx-background-radius: 0;
+}
+
+.button:pressed {
+    -fx-background-color: #e5e5e5; /* Light gray */
+}
+
+.label {
+    -fx-font-size: 14px;
+}
+
+.text-field {
+    -fx-font-size: 14px;
+}
+
+.vbox > .label {
+    -fx-font-weight: bold;
+    -fx-text-fill: #000000; /* Black text */
+}
+
+.vbox {
+    -fx-padding: 10px;
+}
+
+.button.time-slot {
+    -fx-background-color: #E6E6E6; /* Light gray */
+    -fx-text-fill: #000000; /* Black text */
+    -fx-font-size: 14px;
+    -fx-min-width: 40px;
+}
+
+.button.time-slot:disabled {
+    -fx-background-color: #CCCCCC; /* Light gray, disabled state */
+    -fx-text-fill: #808080; /* Grayed text for disabled state */
+}
+
+.vbox.time-slots {
+    -fx-spacing: 5px;
+}
+
+.titled-pane .title {
+    -fx-background-color: #4F81BD; /* Excel-like blue color */
+    -fx-text-fill: white;
+}
+
+.titled-pane .content {
+    -fx-padding: 10px;
+}

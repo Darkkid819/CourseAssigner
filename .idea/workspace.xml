@@ -5,15 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="gui">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorList.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/images/search.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructors.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/XLSXParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/XLSXParser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -104,6 +100,7 @@
       <workItem from="1695082654872" duration="16000" />
       <workItem from="1695169652192" duration="8034000" />
       <workItem from="1695179368426" duration="225000" />
+      <workItem from="1695179595989" duration="2021000" />
     </task>
     <task id="LOCAL-00001" summary="gui">
       <option name="closed" value="true" />
