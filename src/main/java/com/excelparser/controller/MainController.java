@@ -1,6 +1,5 @@
 package com.excelparser.controller;
 
-import com.excelparser.Main;
 import com.excelparser.model.Instructor;
 import com.excelparser.model.InstructorList;
 import javafx.fxml.FXML;
@@ -8,12 +7,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
-import java.util.TreeSet;
+import java.util.*;
 
 public class MainController implements Initializable {
 
+    InstructorList instructorList;
     Instructor[] instructors;
     int currentInstructor = 0;
     private Button[][] timeSlotButtons;
@@ -88,7 +86,8 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        instructors = InstructorList.getInstance().getInstructorList().toArray(new Instructor[0]);
+        instructorList = InstructorList.getInstance();
+        instructors = instructorList.toArray();
 
         timeSlotButtons = new Button[][]{
                 {monday7to8, tuesday7to8, wednesday7to8, thursday7to8, friday7to8, saturday7to8, sunday7to8},
@@ -121,11 +120,20 @@ public class MainController implements Initializable {
         idLabel.setText(instructors[currentInstructor].getId());
         rankLabel.setText(instructors[currentInstructor].getRank());
         homeCampusLabel.setText(instructors[currentInstructor].getHomeCampus());
-        preferredCampusLabel.setText(instructors[currentInstructor].getPreferredCampuses());
+        preferredCampusLabel.setText(listToString(instructors[currentInstructor].getPreferredCampuses()));
         onlineCertifiedLabel.setText((instructors[currentInstructor].isOnlineCertified() ? "Yes" : "No"));
-        coursesCertifiedLabel.setText(instructors[currentInstructor].getCoursesCertified());
+        coursesCertifiedLabel.setText(listToString(instructors[currentInstructor].getCoursesCertified()));
         coursesRequestedLabel.setText(String.valueOf(instructors[currentInstructor].getCoursesRequested()));
         updateAvailability();
+    }
+
+    // Custom List toString to avoid brackets
+    private static String listToString(List<?> list) {
+        StringBuilder result = new StringBuilder();
+        for (int i = 0; i < list.size(); i++) {
+            result.append(list.get(i).toString() + " ");
+        }
+        return result.toString();
     }
 
     public void updateAvailability() {
@@ -150,23 +158,13 @@ public class MainController implements Initializable {
         if (idText.isEmpty()) {
             showErrorDialog("Please enter an ID.");
         } else {
-            try {
-                int id = Integer.parseInt(idText);
+            Optional<Instructor> foundInstructor = instructorList.search(idText);
 
-                TreeSet<Instructor> instructorSet = InstructorList.getInstance().getInstructorList();
-
-                Optional<Instructor> foundInstructor = instructorSet.stream()
-                        .filter(instructor -> Integer.parseInt(instructor.getId()) == id)
-                        .findFirst();
-
-                if (foundInstructor.isPresent()) {
-                    currentInstructor = instructorSet.headSet(foundInstructor.get(), false).size();
-                    updateInstructor();
-                } else {
-                    showErrorDialog("No instructor found with ID: " + id);
-                }
-            } catch (NumberFormatException e) {
-                showErrorDialog("Invalid ID: " + idText);
+            if (foundInstructor.isPresent()) {
+                currentInstructor = instructorList.index(foundInstructor.get());
+                updateInstructor();
+            } else {
+                showErrorDialog("No instructor found with ID: " + idText);
             }
         }
     }

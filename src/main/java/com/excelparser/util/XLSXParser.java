@@ -1,7 +1,5 @@
 package com.excelparser.util;
 
-import com.excelparser.model.Instructor;
-import com.excelparser.model.InstructorList;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 

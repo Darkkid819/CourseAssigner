@@ -1,6 +1,5 @@
 package com.excelparser;
 
-import com.excelparser.model.InstructorList;
 import com.excelparser.util.XLSXParser;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -17,8 +16,8 @@ public class Main extends Application {
     private static String filePath;
 
     public static void init(String[] args) {
+        scanner = new Scanner(System.in);
         getInputFilePath(args);
-        InstructorList.getInstance();
         parseInstructors();
     }
 
@@ -54,18 +53,15 @@ public class Main extends Application {
     private static void parseInstructors() {
         try {
             XLSXParser.parse(filePath);
-            System.out.println("Instructor data parsed successfully:\n");
-            // System.out.println(instructors.toString());
+            System.out.println("Instructor data parsed successfully\n");
         } catch (IOException e) {
-            System.err.println("Error reading or parsing the xlsx file.");
+            System.err.println("Error reading or parsing the xlsx file\n");
             e.printStackTrace();
         }
     }
 
     public static void main(String[] args) {
-        scanner = new Scanner(System.in);
         init(args);
-
         launch(args);
     }
 }

@@ -1,20 +1,25 @@
 package com.excelparser.model;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Objects;
+
 public class Instructor implements Comparable<Instructor> {
     private final String ID;
-    private String name;
-    private String rank;
-    private String homeCampus;
-    private String preferredCampuses;
+    private String name, rank, homeCampus;
+    private ArrayList<Character> preferredCampuses;
+    private ArrayList<String> coursesCertified;
     private boolean onlineCertified;
-    private String coursesCertified;
     private int coursesRequested;
     private boolean[][] availability;
+    private final int TIME_SLOTS = 6, DAYS = 7;
 
     // need to use setters to set the values of the other fields
     public Instructor(String id) {
         this.ID = id;
-        this.availability = new boolean[6][7];
+        preferredCampuses = new ArrayList<>(4); // only 4 options
+        coursesCertified = new ArrayList<>(20);
+        this.availability = new boolean[TIME_SLOTS][DAYS];
     }
 
     public String getName() {
@@ -33,7 +38,7 @@ public class Instructor implements Comparable<Instructor> {
         return homeCampus;
     }
 
-    public String getPreferredCampuses() {
+    public ArrayList<Character> getPreferredCampuses() {
         return preferredCampuses;
     }
 
@@ -41,7 +46,7 @@ public class Instructor implements Comparable<Instructor> {
         return onlineCertified;
     }
 
-    public String getCoursesCertified() {
+    public ArrayList<String> getCoursesCertified() {
         return coursesCertified;
     }
 
@@ -64,7 +69,7 @@ public class Instructor implements Comparable<Instructor> {
         this.homeCampus = homeCampus;
     }
 
-    public void setPreferredCampuses(String preferredCampuses) {
+    public void setPreferredCampuses(ArrayList<Character> preferredCampuses) {
         this.preferredCampuses = preferredCampuses;
     }
 
@@ -72,7 +77,7 @@ public class Instructor implements Comparable<Instructor> {
         this.onlineCertified = onlineCertified;
     }
 
-    public void setCoursesCertified(String coursesCertified) {
+    public void setCoursesCertified(ArrayList<String> coursesCertified) {
         this.coursesCertified = coursesCertified;
     }
 
@@ -97,5 +102,20 @@ public class Instructor implements Comparable<Instructor> {
     @Override
     public int compareTo(Instructor other) {
         return this.ID.compareTo(other.ID);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Instructor)) return false;
+        Instructor instructor = (Instructor) o;
+        return this.ID.equals(instructor.ID);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(ID);
+        result = 31 * result + Arrays.hashCode(availability);
+        return result;
     }
 }

@@ -1,6 +1,7 @@
 package com.excelparser.model;
 
 import java.util.LinkedList;
+import java.util.Optional;
 import java.util.TreeSet;
 
 public class InstructorList {
@@ -12,8 +13,8 @@ public class InstructorList {
         instructorList = new TreeSet<>();
     }
 
-    // Singleton pattern
-    public static InstructorList getInstance() {
+    // Synchronized singleton pattern
+    public synchronized static InstructorList getInstance() {
         return (instance == null) ? instance = new InstructorList() : instance;
     }
 
@@ -21,8 +22,19 @@ public class InstructorList {
         instructorList.add(instructor);
     }
 
-    public TreeSet<Instructor> getInstructorList() {
-        return instructorList;
+    public void remove(String id) {
+        instructorList.removeIf(i -> i.getId().equals(id));
+    }
+
+    public Optional<Instructor> search(String id) {
+        return instructorList.stream().filter(i -> i.getId().equals(id)).findFirst();
+    }
+
+    public Instructor[] toArray() {return instructorList.toArray(new Instructor[0]);}
+
+    // Used for the controller class when using side buttons
+    public int index(Instructor instructor) {
+        return instructorList.headSet(instructor, false).size();
     }
 
     @Override

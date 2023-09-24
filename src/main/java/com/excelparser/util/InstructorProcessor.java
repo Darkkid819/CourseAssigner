@@ -3,7 +3,9 @@ package com.excelparser.util;
 import com.excelparser.model.Instructor;
 import com.excelparser.model.InstructorList;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 // only accessed in util package
 final class InstructorProcessor {
@@ -44,50 +46,38 @@ final class InstructorProcessor {
         InstructorList.getInstance().add(instructor);
     }
 
-    private static String parsePreferredCampuses(String preferredCampuses) {
-        StringBuilder fullCampusNames = new StringBuilder();
+    private static ArrayList<Character> parsePreferredCampuses(String preferredCampuses) {
+        ArrayList<Character> campuses = new ArrayList<>();
 
-        if (preferredCampuses.contains("A")) {
-            fullCampusNames.append("Ammerman, ");
-        }
-        if (preferredCampuses.contains("E")) {
-            fullCampusNames.append("Eastern, ");
-        }
-        if (preferredCampuses.contains("W")) {
-            fullCampusNames.append("Western, ");
-        }
-        if (preferredCampuses.contains("O")) {
-            fullCampusNames.append("Online, ");
+        for (int i = 0; i < preferredCampuses.length(); i++) {
+            char currentChar = preferredCampuses.charAt(i);
+
+            if (currentChar == 'A' || currentChar == 'E' || currentChar == 'W' || currentChar == 'O') {
+                campuses.add(currentChar);
+            }
         }
 
-        // Remove the trailing comma and space if any
-        if (fullCampusNames.length() > 0) {
-            fullCampusNames.delete(fullCampusNames.length() - 2, fullCampusNames.length());
-        }
-
-        return fullCampusNames.toString();
+        // Remove duplicates
+        return (ArrayList<Character>) campuses.stream().distinct().collect(Collectors.toList());
     }
 
     private static boolean parseOnlineCertified(String onlineCertified) {
         return onlineCertified != null && onlineCertified.equalsIgnoreCase("Y");
     }
 
-    private static String parseCoursesCertified(List<String> instructorData, int startIndex) {
-        StringBuilder courses = new StringBuilder();
+    private static ArrayList<String> parseCoursesCertified(List<String> instructorData, int startIndex) {
+        ArrayList<String> courses = new ArrayList<>();
 
         for (int i = startIndex; i < instructorData.size(); i++) {
             String cellValue = instructorData.get(i);
             if (cellValue != null && !cellValue.isEmpty()) {
-                courses.append(cellValue).append(", ");
+                String[] splitCourses = cellValue.split("\\s+"); // split by whitespace
+                for (String course : splitCourses)
+                    courses.add(course);
             }
         }
 
-        if (courses.length() > 0) {
-            // Remove the trailing ", " if courses were added
-            courses.setLength(courses.length() - 2);
-        }
-
-        return courses.toString();
+        return courses;
     }
 
     private static int parseCoursesRequested(String secondCourseRequested, String thirdCourseRequested) {
