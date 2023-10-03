@@ -1,10 +1,16 @@
 package com.excelparser.model;
 
-import java.util.LinkedList;
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.TreeSet;
 
-public class InstructorSet {
+public class InstructorSet implements Serializable {
+
+    // Bill Pugh Singleton Implementation
+    private static class Holder {
+        private static final InstructorSet INSTANCE = new InstructorSet();
+    }
+
     private static InstructorSet instance;
     private TreeSet<Instructor> instructorSet;
 
@@ -12,9 +18,8 @@ public class InstructorSet {
         instructorSet = new TreeSet<>();
     }
 
-    // Synchronized singleton pattern
-    public synchronized static InstructorSet getInstance() {
-        return (instance == null) ? instance = new InstructorSet() : instance;
+    public static InstructorSet getInstance() {
+        return Holder.INSTANCE;
     }
 
     public void add(Instructor instructor) {

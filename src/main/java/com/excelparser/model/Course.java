@@ -1,11 +1,11 @@
 package com.excelparser.model;
 
-import java.time.LocalTime;
-import java.util.ArrayList;
+import com.excelparser.model.enums.Subject;
 
 public class Course implements Comparable<Course> {
 
-    private String courseNumber, courseTitle, subject;
+    private String courseNumber, courseTitle;
+    private Subject subject;
     private CourseInfo courseInfo;
     private final int CRN;
 
@@ -23,9 +23,9 @@ public class Course implements Comparable<Course> {
 
     public void setCourseTitle(String courseTitle) { this.courseTitle = courseTitle; }
 
-    public String getSubject() { return subject; }
+    public Subject getSubject() { return subject; }
 
-    public void setSubject(String subject) { this.subject = subject; }
+    public void setSubject(Subject subject) { this.subject = subject; }
     public CourseInfo getCourseInfo() { return courseInfo; }
     public void setCourseInfo(CourseInfo courseInfo) { this.courseInfo = courseInfo; }
 

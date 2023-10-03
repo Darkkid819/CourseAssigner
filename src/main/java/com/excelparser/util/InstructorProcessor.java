@@ -1,9 +1,8 @@
 package com.excelparser.util;
 
-import com.excelparser.model.Instructor;
-import com.excelparser.model.InstructorInfo;
-import com.excelparser.model.InstructorSet;
-import com.excelparser.model.Name;
+import com.excelparser.model.*;
+import com.excelparser.model.enums.Campus;
+import com.excelparser.model.enums.Rank;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -41,7 +40,7 @@ public final class InstructorProcessor {
 
     private static InstructorInfo processInstructorInfo(List<String> instructorData) {
         InstructorInfo instructorInfo = new InstructorInfo();
-        instructorInfo.setRank(instructorData.get(3));
+        instructorInfo.setRank(Rank.valueOf(instructorData.get(3)));
         instructorInfo.setPreferredCampuses(parsePreferredCampuses(instructorData.get(5)));
         instructorInfo.setOnlineCertified(parseOnlineCertified(instructorData.get(4)));
         instructorInfo.setCoursesCertified(parseCoursesCertified(instructorData, 32));
@@ -75,19 +74,20 @@ public final class InstructorProcessor {
         return new Name(parts[0], parts[1]);
     }
 
-    private static ArrayList<Character> parsePreferredCampuses(String preferredCampuses) {
-        ArrayList<Character> campuses = new ArrayList<>();
+    private static ArrayList<Campus> parsePreferredCampuses(String preferredCampuses) {
+        ArrayList<Campus> campuses = new ArrayList<>();
 
         for (int i = 0; i < preferredCampuses.length(); i++) {
             char currentChar = preferredCampuses.charAt(i);
 
             if (currentChar == 'A' || currentChar == 'E' || currentChar == 'W' || currentChar == 'O') {
-                campuses.add(currentChar);
+                String campus = String.valueOf(currentChar);
+                campuses.add(Campus.valueOf(campus));
             }
         }
 
         // Remove duplicates
-        return (ArrayList<Character>) campuses.stream().distinct().collect(Collectors.toList());
+        return (ArrayList<Campus>) campuses.stream().distinct().collect(Collectors.toList());
     }
 
     private static boolean parseOnlineCertified(String onlineCertified) {

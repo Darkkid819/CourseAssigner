@@ -1,23 +1,27 @@
 package com.excelparser.model;
 
+import com.excelparser.model.enums.Campus;
+import com.excelparser.model.enums.Rank;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class InstructorInfo {
-    private String rank;
+    private Rank rank;
     private boolean onlineCertified;
-    private ArrayList<String> coursesCertified;
-    private ArrayList<Character> preferredCampuses;
+    private List<String> coursesCertified;
+    private List<Campus> preferredCampuses;
 
     public InstructorInfo() {
         preferredCampuses = new ArrayList<>(4); // only 4 options
         coursesCertified = new ArrayList<>(20);
     }
 
-    public String getRank() {
+    public Rank getRank() {
         return rank;
     }
 
-    public void setRank(String rank) {
+    public void setRank(Rank rank) {
         this.rank = rank;
     }
 
@@ -29,19 +33,19 @@ public class InstructorInfo {
         this.onlineCertified = onlineCertified;
     }
 
-    public ArrayList<String> getCoursesCertified() {
+    public List<String> getCoursesCertified() {
         return coursesCertified;
     }
 
-    public void setCoursesCertified(ArrayList<String> coursesCertified) {
+    public void setCoursesCertified(List<String> coursesCertified) {
         this.coursesCertified = coursesCertified;
     }
 
-    public ArrayList<Character> getPreferredCampuses() {
+    public List<Campus> getPreferredCampuses() {
         return preferredCampuses;
     }
 
-    public void setPreferredCampuses(ArrayList<Character> preferredCampuses) {
+    public void setPreferredCampuses(List<Campus> preferredCampuses) {
         this.preferredCampuses = preferredCampuses;
     }
 }

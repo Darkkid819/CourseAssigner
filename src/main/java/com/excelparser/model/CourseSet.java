@@ -1,20 +1,23 @@
 package com.excelparser.model;
 
+import java.io.Serializable;
 import java.util.Optional;
 import java.util.TreeSet;
 
-public class CourseSet {
+public class CourseSet implements Serializable {
 
-    private static CourseSet instance;
+    // Bill Pugh Singleton Implementation
+    private static class Holder {
+        private static final CourseSet INSTANCE = new CourseSet();
+    }
     private TreeSet<Course> courseSet;
 
     private CourseSet() {
         courseSet = new TreeSet<>();
     }
 
-    // Synchronized singleton pattern
-    public synchronized static CourseSet getInstance() {
-        return (instance == null) ? instance = new CourseSet() : instance;
+    public static CourseSet getInstance() {
+        return Holder.INSTANCE;
     }
 
     public void add(Course course) {

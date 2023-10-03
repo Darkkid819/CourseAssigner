@@ -12,31 +12,25 @@ import java.util.*;
 
 public class MainController implements Initializable {
 
+    // Constants
+    private static final String AVAILABLE_COLOR = "#008000";
+    private static final String UNAVAILABLE_COLOR = "#E6E6E6";
+
     InstructorSet instructorList;
     Instructor[] instructors;
     InstructorInfo instructorInfo;
     int currentInstructor = 0;
     private Button[][] timeSlotButtons;
-    @FXML
-    TextField idTextField;
-    @FXML
-    Label nameLabel;
-    @FXML
-    Label idLabel;
-    @FXML
-    Label rankLabel;
-    @FXML
-    Button monday7to8;
-    @FXML
-    Label homeCampusLabel;
-    @FXML
-    Label preferredCampusLabel;
-    @FXML
-    Label onlineCertifiedLabel;
-    @FXML
-    Label coursesCertifiedLabel;
-    @FXML
-    Label coursesRequestedLabel;
+    @FXML TextField idTextField;
+    @FXML Label nameLabel;
+    @FXML Label idLabel;
+    @FXML Label rankLabel;
+    @FXML Button monday7to8;
+    @FXML Label homeCampusLabel;
+    @FXML Label preferredCampusLabel;
+    @FXML Label onlineCertifiedLabel;
+    @FXML Label coursesCertifiedLabel;
+    @FXML Label coursesRequestedLabel;
 
     @FXML Button monday8to12;
     @FXML Button monday12to3;
@@ -90,7 +84,11 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         instructorList = InstructorSet.getInstance();
         instructors = instructorList.toArray();
+        initializeTimeSlotButtons();
+        updateInstructor();
+    }
 
+    private void initializeTimeSlotButtons() {
         timeSlotButtons = new Button[][]{
                 {monday7to8, tuesday7to8, wednesday7to8, thursday7to8, friday7to8, saturday7to8, sunday7to8},
                 {monday8to12, tuesday8to12, wednesday8to12, thursday8to12, friday8to12, saturday8to12, sunday8to12},
@@ -99,8 +97,6 @@ public class MainController implements Initializable {
                 {monday4to6, tuesday4to6, wednesday4to6, thursday4to6, friday4to6, saturday4to6, sunday4to6},
                 {monday6to10, tuesday6to10, wednesday6to10, thursday6to10, friday6to10, saturday6to10, sunday6to10}
         };
-
-        updateInstructor();
     }
 
     public void nextInstructor() {
@@ -122,7 +118,7 @@ public class MainController implements Initializable {
 
         nameLabel.setText(instructors[currentInstructor].getName().toString());
         idLabel.setText(instructors[currentInstructor].getId());
-        rankLabel.setText(instructorInfo.getRank());
+        rankLabel.setText(instructorInfo.getRank().toString());
         homeCampusLabel.setText(instructors[currentInstructor].getHomeCampus());
         preferredCampusLabel.setText(listToString(instructorInfo.getPreferredCampuses()));
         onlineCertifiedLabel.setText((instructorInfo.isOnlineCertified() ? "Yes" : "No"));
@@ -142,34 +138,40 @@ public class MainController implements Initializable {
 
     public void updateAvailability() {
         Instructor instructor = instructors[currentInstructor];
-        boolean [][] availability = instructor.getAvailability();
+        boolean[][] availability = instructor.getAvailability();
 
-        // Loop through the timeSlotButtons and update their colors based on availability
         for (int slot = 0; slot < timeSlotButtons.length; slot++) {
             for (int day = 0; day < timeSlotButtons[slot].length; day++) {
-                if (availability[slot][day]) {
-                    timeSlotButtons[slot][day].setStyle("-fx-background-color: #008000;");
-                } else {
-                    timeSlotButtons[slot][day].setStyle("-fx-background-color: #E6E6E6");
-                }
+                updateButtonColor(timeSlotButtons[slot][day], availability[slot][day]);
             }
         }
     }
 
+    private void updateButtonColor(Button button, boolean available) {
+        button.setStyle("-fx-background-color: " + (available ? AVAILABLE_COLOR : UNAVAILABLE_COLOR) + ";");
+    }
+
     public void searchByID() {
-        String idText = idTextField.getText();
+        String idText = idTextField.getText().trim();
 
         if (idText.isEmpty()) {
             showErrorDialog("Please enter an ID.");
-        } else {
-            Optional<Instructor> foundInstructor = instructorList.search(idText);
+            return;
+        }
 
-            if (foundInstructor.isPresent()) {
-                currentInstructor = instructorList.index(foundInstructor.get());
-                updateInstructor();
-            } else {
-                showErrorDialog("No instructor found with ID: " + idText);
-            }
+        // Check if the ID is numeric and of length 8
+        if (!idText.matches("\\d{8}")) {
+            showErrorDialog("Invalid ID format. Please enter a valid 8-digit numeric ID.");
+            return;
+        }
+
+        Optional<Instructor> foundInstructor = instructorList.search(idText);
+
+        if (foundInstructor.isPresent()) {
+            currentInstructor = instructorList.index(foundInstructor.get());
+            updateInstructor();
+        } else {
+            showErrorDialog("No instructor found with ID: " + idText);
         }
     }
 
