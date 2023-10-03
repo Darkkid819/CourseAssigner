@@ -4,17 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="util package created">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="some changes to model">
+      <change afterPath="$PROJECT_DIR$/data/CourseInformation.csv" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/CourseInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/CourseSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorInfo.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Name.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/Config.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseCSVParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main-copy.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorList.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/XLSXParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/XLSXParser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/XLSXParser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorXLSXParser.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -55,7 +63,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "G:/Code/Java/CSE248/ExcelParser/src/main/resources/com/excelparser/images",
+    "last_opened_file_path": "G:/Code/Java/CSE248/ExcelParser/src/main/resources/com/excelparser/views",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -69,6 +77,7 @@
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="G:\Code\Java\CSE248\ExcelParser\src\main\resources\com\excelparser\views" />
       <recent name="G:\Code\Java\CSE248\ExcelParser\src\main\resources\com\excelparser\images" />
       <recent name="G:\Code\Java\CSE248\ExcelParser\src" />
       <recent name="G:\Code\Java\CSE248\ExcelParser\src\main" />
@@ -76,16 +85,6 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\Code\Java\CSE248\ExcelParser\src\main\resources\com\excelparser\images" />
     </key>
-  </component>
-  <component name="RunManager">
-    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.excelparser.Main" />
-      <module name="ExcelParser" />
-      <option name="PROGRAM_PARAMETERS" value="G:\Code\Java\CSE248\ExcelParser\data\Instructors.xlsx" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -113,7 +112,10 @@
       <workItem from="1695498631558" duration="122000" />
       <workItem from="1695498841920" duration="40000" />
       <workItem from="1695498960883" duration="3552000" />
-      <workItem from="1695508931147" duration="4283000" />
+      <workItem from="1695508931147" duration="10365000" />
+      <workItem from="1695769954356" duration="10348000" />
+      <workItem from="1696365682974" duration="43000" />
+      <workItem from="1696365738732" duration="2075000" />
     </task>
     <task id="LOCAL-00001" summary="gui">
       <option name="closed" value="true" />
@@ -139,7 +141,15 @@
       <option name="project" value="LOCAL" />
       <updated>1695260769856</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="some changes to model">
+      <option name="closed" value="true" />
+      <created>1695513812764</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1695513812764</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -161,6 +171,7 @@
     <MESSAGE value="gui" />
     <MESSAGE value="gui update + css" />
     <MESSAGE value="util package created" />
-    <option name="LAST_COMMIT_MESSAGE" value="util package created" />
+    <MESSAGE value="some changes to model" />
+    <option name="LAST_COMMIT_MESSAGE" value="some changes to model" />
   </component>
 </project>

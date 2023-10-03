@@ -8,7 +8,7 @@ The program consists of three main classes:
 
 1. **com.excelparser.Main**: The main class contains the program's entry point. It allows users to provide a CSV file path as a command-line argument or enter it manually in the console.
 
-2. **com.excelparser.model.InstructorList**: This class manages a list of Instructor objects and provides methods to add instructors and display their data.
+2. **com.excelparser.model.InstructorSet**: This class manages a list of Instructor objects and provides methods to add instructors and display their data.
 
 3. **com.excelparser.model.Parser**: The com.excelparser.model.Parser class is responsible for reading and parsing the CSV file, extracting instructor data based on specific cell indexes, and populating Instructor objects.
 

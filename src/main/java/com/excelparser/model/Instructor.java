@@ -6,48 +6,32 @@ import java.util.Objects;
 
 public class Instructor implements Comparable<Instructor> {
     private final String ID;
-    private String name, rank, homeCampus;
-    private ArrayList<Character> preferredCampuses;
-    private ArrayList<String> coursesCertified;
-    private boolean onlineCertified;
+    private Name name;
+    private InstructorInfo instructorInfo;
+    private String homeCampus;
     private int coursesRequested;
     private boolean[][] availability;
-    private final int TIME_SLOTS = 6, DAYS = 7;
+    private final int PERIOD = 6, DAYS = 7;
 
     // need to use setters to set the values of the other fields
     public Instructor(String id) {
         this.ID = id;
-        preferredCampuses = new ArrayList<>(4); // only 4 options
-        coursesCertified = new ArrayList<>(20);
-        this.availability = new boolean[TIME_SLOTS][DAYS];
-    }
-
-    public String getName() {
-        return name;
+        this.availability = new boolean[PERIOD][DAYS];
     }
 
     public String getId() {
         return ID;
     }
 
-    public String getRank() {
-        return rank;
+    public Name getName() {
+        return name;
     }
+
+
+    public InstructorInfo getInstructorInfo() { return instructorInfo; }
 
     public String getHomeCampus() {
         return homeCampus;
-    }
-
-    public ArrayList<Character> getPreferredCampuses() {
-        return preferredCampuses;
-    }
-
-    public boolean isOnlineCertified() {
-        return onlineCertified;
-    }
-
-    public ArrayList<String> getCoursesCertified() {
-        return coursesCertified;
     }
 
     public int getCoursesRequested() {
@@ -57,28 +41,16 @@ public class Instructor implements Comparable<Instructor> {
         return availability;
     }
 
-    public void setName(String name) {
+    public void setName(Name name) {
         this.name = name;
     }
 
-    public void setRank(String rank) {
-        this.rank = rank;
+    public void setInstructorInfo(InstructorInfo instructorInfo) {
+        this.instructorInfo = instructorInfo;
     }
 
     public void setHomeCampus(String homeCampus) {
         this.homeCampus = homeCampus;
-    }
-
-    public void setPreferredCampuses(ArrayList<Character> preferredCampuses) {
-        this.preferredCampuses = preferredCampuses;
-    }
-
-    public void setOnlineCertified(boolean onlineCertified) {
-        this.onlineCertified = onlineCertified;
-    }
-
-    public void setCoursesCertified(ArrayList<String> coursesCertified) {
-        this.coursesCertified = coursesCertified;
     }
 
     public void setCoursesRequested(int coursesRequested) {
@@ -91,11 +63,11 @@ public class Instructor implements Comparable<Instructor> {
     public String toString() {
         return "Instructor ID: " + ID +
                 "\nName: " + name +
-                "\nRank: " + rank +
+                "\nRank: " + instructorInfo.getRank() +
                 "\nHome Campus: " + homeCampus +
-                "\nPreferred Campuses: " + preferredCampuses +
-                "\nOnline Certified: " + (onlineCertified ? "Yes" : "No") +
-                "\nCourses Certified: " + coursesCertified +
+                "\nPreferred Campuses: " + instructorInfo.getPreferredCampuses() +
+                "\nOnline Certified: " + (instructorInfo.isOnlineCertified() ? "Yes" : "No") +
+                "\nCourses Certified: " + instructorInfo.getCoursesCertified() +
                 "\nCourses Requested: " + coursesRequested;
     }
 

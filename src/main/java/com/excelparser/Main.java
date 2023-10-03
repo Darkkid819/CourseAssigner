@@ -1,23 +1,22 @@
 package com.excelparser;
 
-import com.excelparser.util.XLSXParser;
+import com.excelparser.model.CourseSet;
+import com.excelparser.util.Config;
+import com.excelparser.util.CourseProcessor;
+import com.excelparser.util.InstructorProcessor;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class Main extends Application {
-    private static Scanner scanner;
-    private static String filePath;
 
     public static void init(String[] args) {
-        scanner = new Scanner(System.in);
-        getInputFilePath(args);
+        Config.configure(args);
+        parseCourses();
         parseInstructors();
     }
 
@@ -34,28 +33,23 @@ public class Main extends Application {
         stage.setMinHeight(scene.getHeight());
     }
 
-    private static void getInputFilePath(String[] args) {
-        // Check if a command-line argument for the file path is provided
-        if (args.length > 0) {
-            filePath = args[0];
-        } else {
-            while (filePath == null || !isValidFilePath(filePath)) {
-                System.out.print("Enter the XLSX file path: ");
-                filePath = scanner.nextLine();
-            }
-        }
-    }
-
-    private static boolean isValidFilePath(String path) {
-        return Files.exists(Paths.get(path)) && path.toLowerCase().endsWith(".xlsx");
-    }
-
     private static void parseInstructors() {
         try {
-            XLSXParser.parse(filePath);
+            InstructorProcessor.processInstructors(Config.getInstructorPath());
             System.out.println("Instructor data parsed successfully\n");
         } catch (IOException e) {
             System.err.println("Error reading or parsing the xlsx file\n");
+            e.printStackTrace();
+        }
+    }
+
+    private static void parseCourses() {
+        try {
+            CourseProcessor.processCourses(Config.getCoursePath());
+            System.out.println("Course data parsed successfully\n");
+            System.out.println(CourseSet.getInstance().toString()); // test
+        } catch (IOException e) {
+            System.err.println("Error reading or parsing the csv file\n");
             e.printStackTrace();
         }
     }

@@ -8,45 +8,43 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class XLSXParser {
+final class InstructorXLSXParser {
 
-    private XLSXParser() {}
+    private InstructorXLSXParser() {}
 
-    public static void parse(String filePath) throws IOException {
+    public static List<List<String>> parse(String filePath) throws IOException {
+        List<List<String>> instructorsData = new ArrayList<>();
+
         try (FileInputStream fis = new FileInputStream(filePath);
              Workbook workbook = new XSSFWorkbook(fis)) {
 
-            Sheet sheet = workbook.getSheetAt(0); // Assuming the first sheet
+            Sheet sheet = workbook.getSheetAt(0);
 
             int currentRow = 0;
-
             while (currentRow < sheet.getLastRowNum()) {
                 Row row = sheet.getRow(currentRow);
                 currentRow++;
 
-                // Skip rows until a row starting with "—" is encountered
                 if (row == null || row.getCell(0) == null || !row.getCell(0).getStringCellValue().startsWith("—")) {
                     continue;
                 }
 
-                // Process instructor data and call the add methodInstructors.
-                processInstructorData(sheet, currentRow);
+                instructorsData.add(processInstructorData(sheet, currentRow));
             }
         }
+
+        return instructorsData;
     }
 
-    private static void processInstructorData(Sheet sheet, int currentRow) {
-        List<String> instructorData = new ArrayList<>(75); // Store cell values for each instructor
+    private static List<String> processInstructorData(Sheet sheet, int currentRow) {
+        List<String> instructorData = new ArrayList<>(75);
 
         while (currentRow <= sheet.getLastRowNum() + 1) {
             Row row = sheet.getRow(currentRow);
 
             if (row == null || row.getCell(0).getStringCellValue().startsWith("—")) {
-                // End of instructor data, process and add to InstructorList object
-                InstructorProcessor.addInstructor(instructorData);
                 break;
             } else {
-                // Process and add all cell values in the row to the list
                 for (Cell cell : row) {
                     String cellValue = getCellValueAsString(cell);
                     instructorData.add(cellValue);
@@ -54,11 +52,13 @@ public final class XLSXParser {
                 currentRow++;
             }
         }
+
+        return instructorData;
     }
 
     private static String getCellValueAsString(Cell cell) {
         if (cell == null) {
-            return ""; // Handle empty cells
+            return "";
         }
         switch (cell.getCellType()) {
             case STRING:

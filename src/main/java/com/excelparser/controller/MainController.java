@@ -1,7 +1,8 @@
 package com.excelparser.controller;
 
 import com.excelparser.model.Instructor;
-import com.excelparser.model.InstructorList;
+import com.excelparser.model.InstructorInfo;
+import com.excelparser.model.InstructorSet;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -11,8 +12,9 @@ import java.util.*;
 
 public class MainController implements Initializable {
 
-    InstructorList instructorList;
+    InstructorSet instructorList;
     Instructor[] instructors;
+    InstructorInfo instructorInfo;
     int currentInstructor = 0;
     private Button[][] timeSlotButtons;
     @FXML
@@ -86,7 +88,7 @@ public class MainController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        instructorList = InstructorList.getInstance();
+        instructorList = InstructorSet.getInstance();
         instructors = instructorList.toArray();
 
         timeSlotButtons = new Button[][]{
@@ -116,13 +118,15 @@ public class MainController implements Initializable {
     }
 
     private void updateInstructor() {
-        nameLabel.setText(instructors[currentInstructor].getName());
+        instructorInfo = instructors[currentInstructor].getInstructorInfo();
+
+        nameLabel.setText(instructors[currentInstructor].getName().toString());
         idLabel.setText(instructors[currentInstructor].getId());
-        rankLabel.setText(instructors[currentInstructor].getRank());
+        rankLabel.setText(instructorInfo.getRank());
         homeCampusLabel.setText(instructors[currentInstructor].getHomeCampus());
-        preferredCampusLabel.setText(listToString(instructors[currentInstructor].getPreferredCampuses()));
-        onlineCertifiedLabel.setText((instructors[currentInstructor].isOnlineCertified() ? "Yes" : "No"));
-        coursesCertifiedLabel.setText(listToString(instructors[currentInstructor].getCoursesCertified()));
+        preferredCampusLabel.setText(listToString(instructorInfo.getPreferredCampuses()));
+        onlineCertifiedLabel.setText((instructorInfo.isOnlineCertified() ? "Yes" : "No"));
+        coursesCertifiedLabel.setText(listToString(instructorInfo.getCoursesCertified()));
         coursesRequestedLabel.setText(String.valueOf(instructors[currentInstructor].getCoursesRequested()));
         updateAvailability();
     }

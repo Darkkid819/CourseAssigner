@@ -1,27 +1,54 @@
 package com.excelparser.util;
 
 import com.excelparser.model.Instructor;
-import com.excelparser.model.InstructorList;
+import com.excelparser.model.InstructorInfo;
+import com.excelparser.model.InstructorSet;
+import com.excelparser.model.Name;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 // only accessed in util package
-final class InstructorProcessor {
+public final class InstructorProcessor {
 
     private InstructorProcessor() {}
 
-    protected static void addInstructor(List<String> instructorData) {
-        Instructor instructor = new Instructor(instructorData.get(0));
-        instructor.setName(instructorData.get(1));
-        instructor.setRank(instructorData.get(3));
-        instructor.setHomeCampus(instructorData.get(15));
-        instructor.setPreferredCampuses(parsePreferredCampuses(instructorData.get(5)));
-        instructor.setOnlineCertified(parseOnlineCertified(instructorData.get(4)));
-        instructor.setCoursesCertified(parseCoursesCertified(instructorData, 32));
-        instructor.setCoursesRequested(parseCoursesRequested(instructorData.get(6), instructorData.get(21)));
+    public static void processInstructors(String xlsxFilePath) throws IOException {
+        List<List<String>> data = InstructorXLSXParser.parse(xlsxFilePath);
+        for (List<String> instructorData : data) {
+            addInstructor(instructorData);
+        }
+    }
 
+    private static void addInstructor(List<String> instructorData) {
+        Instructor instructor = createInstructorFromData(instructorData);
+        InstructorSet.getInstance().add(instructor);
+    }
+
+    private static Instructor createInstructorFromData(List<String> instructorData) {
+        Instructor instructor = new Instructor(instructorData.get(0));
+        instructor.setName(parseName(instructorData.get(1)));
+        instructor.setHomeCampus(instructorData.get(15));
+        instructor.setCoursesRequested(parseCoursesRequested(instructorData.get(6), instructorData.get(21)));
+        InstructorInfo instructorInfo = processInstructorInfo(instructorData);
+        instructor.setInstructorInfo(instructorInfo);
+        boolean[][] availability = processAvailability(instructorData);
+        instructor.setAvailability(availability);
+        return instructor;
+    }
+
+    private static InstructorInfo processInstructorInfo(List<String> instructorData) {
+        InstructorInfo instructorInfo = new InstructorInfo();
+        instructorInfo.setRank(instructorData.get(3));
+        instructorInfo.setPreferredCampuses(parsePreferredCampuses(instructorData.get(5)));
+        instructorInfo.setOnlineCertified(parseOnlineCertified(instructorData.get(4)));
+        instructorInfo.setCoursesCertified(parseCoursesCertified(instructorData, 32));
+        return instructorInfo;
+    }
+
+    private static boolean[][] processAvailability(List<String> instructorData) {
         boolean availableSaturday = instructorData.get(10).contains("Sat") || instructorData.get(25).contains("Sat");
         boolean availableSunday = instructorData.get(10).contains("Sun") || instructorData.get(25).contains("Sun");
 
@@ -33,7 +60,7 @@ final class InstructorProcessor {
         boolean[] availability4to6 = parseAvailability(instructorData.get(11), "", false, availableSaturday, availableSunday); // only one cell
         boolean[] availability6to10 = parseAvailability(instructorData.get(12), "", false, availableSaturday, availableSunday); // only one cell
 
-        boolean[][] availability = {
+        return new boolean[][] {
                 availability7to8,
                 availability8to12,
                 availability12to3,
@@ -41,9 +68,11 @@ final class InstructorProcessor {
                 availability4to6,
                 availability6to10
         };
-        instructor.setAvailability(availability);
+    }
 
-        InstructorList.getInstance().add(instructor);
+    private static Name parseName(String name) {
+        String[] parts = name.split(" ");
+        return new Name(parts[0], parts[1]);
     }
 
     private static ArrayList<Character> parsePreferredCampuses(String preferredCampuses) {
@@ -98,11 +127,11 @@ final class InstructorProcessor {
 
         // Excel cells either have a star in first or second cell so this is necessary for now
         if (isSpecial) {
-            if (firstCell.contains("*")) checkWeekDay(firstCell, availability);
-            if (secondCell.contains("*")) checkWeekDay(secondCell, availability);
+            if (firstCell.contains("*")) parseWeekDay(firstCell, availability);
+            if (secondCell.contains("*")) parseWeekDay(secondCell, availability);
         } else {
-            if (!firstCell.contains("*")) checkWeekDay(firstCell, availability);
-            if (!secondCell.contains("*")) checkWeekDay(secondCell, availability);
+            if (!firstCell.contains("*")) parseWeekDay(firstCell, availability);
+            if (!secondCell.contains("*")) parseWeekDay(secondCell, availability);
         }
 
         availability[5] = availableSaturday;
@@ -111,7 +140,7 @@ final class InstructorProcessor {
         return availability;
     }
 
-    private static void checkWeekDay(String cell, boolean[] availability) {
+    private static void parseWeekDay(String cell, boolean[] availability) {
         if (cell.contains("M")) {
             availability[0] = true;
         }
