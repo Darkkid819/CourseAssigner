@@ -14,6 +14,7 @@ public class Main extends Application {
     public static void init(String[] args) {
         ConfigurationManager.configure(args);
         DataManager.loadData();
+        System.out.println(CourseSet.getInstance().toString()); // test
     }
 
     @Override
@@ -27,6 +28,7 @@ public class Main extends Application {
         // set minimum window size
         stage.setMinWidth(scene.getWidth());
         stage.setMinHeight(scene.getHeight());
+        stage.setResizable(false); // Temporary
 
         stage.setOnCloseRequest(e -> DataManager.saveData());
     }

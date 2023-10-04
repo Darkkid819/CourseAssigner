@@ -37,11 +37,6 @@
     -fx-min-width: 40px;
 }
 
-.button.time-slot:disabled {
-    -fx-background-color: #CCCCCC; /* Light gray, disabled state */
-    -fx-text-fill: #808080; /* Grayed text for disabled state */
-}
-
 .vbox.time-slots {
     -fx-spacing: 5px;
 }

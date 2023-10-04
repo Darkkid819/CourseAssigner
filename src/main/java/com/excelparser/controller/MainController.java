@@ -3,9 +3,12 @@ package com.excelparser.controller;
 import com.excelparser.model.Instructor;
 import com.excelparser.model.InstructorInfo;
 import com.excelparser.model.InstructorSet;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
 import java.util.*;
@@ -14,7 +17,7 @@ public class MainController implements Initializable {
 
     // Constants
     private static final String AVAILABLE_COLOR = "#008000";
-    private static final String UNAVAILABLE_COLOR = "#E6E6E6";
+    private static final String UNAVAILABLE_COLOR = "#EB4034";
 
     InstructorSet instructorList;
     Instructor[] instructors;
@@ -31,6 +34,7 @@ public class MainController implements Initializable {
     @FXML Label onlineCertifiedLabel;
     @FXML Label coursesCertifiedLabel;
     @FXML Label coursesRequestedLabel;
+    @FXML ListView instructorListView;
 
     @FXML Button monday8to12;
     @FXML Button monday12to3;
@@ -84,8 +88,32 @@ public class MainController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         instructorList = InstructorSet.getInstance();
         instructors = instructorList.toArray();
+        initializeListView();
         initializeTimeSlotButtons();
         updateInstructor();
+    }
+
+    private void initializeListView() {
+        instructorListView.getItems().addAll(instructors);
+        instructorListView.setCellFactory(param -> new ListCell<Instructor>() {
+            @Override
+            protected void updateItem(Instructor instructor, boolean empty) {
+                super.updateItem(instructor, empty);
+
+                if (empty || instructor == null) {
+                    setText(null);
+                } else {
+                    setText(instructor.getName().toString());  // or any other property of the Instructor
+                }
+            }
+        });
+        instructorListView.setOnMouseClicked(event -> {
+            Instructor selectedInstructor = (Instructor) instructorListView.getSelectionModel().getSelectedItem();
+            if (selectedInstructor != null) {
+                currentInstructor = instructorList.index(selectedInstructor);
+                updateInstructor();
+            }
+        });
     }
 
     private void initializeTimeSlotButtons() {
