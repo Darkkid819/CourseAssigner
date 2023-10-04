@@ -12,8 +12,7 @@ import java.io.IOException;
 public class Main extends Application {
 
     public static void init(String[] args) {
-        ConfigurationManager.configure(args);
-        DataManager.loadData();
+        DataManager.loadData(args);
         System.out.println(CourseSet.getInstance().toString()); // test
     }
 

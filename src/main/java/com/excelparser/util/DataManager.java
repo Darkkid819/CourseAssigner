@@ -9,7 +9,7 @@ public final class DataManager {
 
     private DataManager() {}
 
-    public static void loadData() {
+    public static void loadData(String[] args) {
         if (ConfigurationManager.serializedFilesExist()) {
             try {
                 CourseSet loadedCourseSet = (CourseSet) Serializer.deserializeFromFile(ConfigurationManager.getCourseSetFile());
@@ -22,6 +22,7 @@ public final class DataManager {
                 parseOriginalFiles();
             }
         } else {
+            ConfigurationManager.configure(args);
             parseOriginalFiles();
             saveData();
         }
@@ -43,7 +44,7 @@ public final class DataManager {
 
     private static void parseCourses() {
         try {
-            CourseProcessor.processCourses(Config.getCoursePath());
+            CourseProcessor.processCourses(ConfigurationManager.getCoursePath());
             System.out.println("Course data parsed successfully\n");
         } catch (IOException e) {
             System.err.println("Error reading or parsing the csv file\n");
@@ -53,7 +54,7 @@ public final class DataManager {
 
     private static void parseInstructors() {
         try {
-            InstructorProcessor.processInstructors(Config.getInstructorPath());
+            InstructorProcessor.processInstructors(ConfigurationManager.getInstructorPath());
             System.out.println("Instructor data parsed successfully\n");
         } catch (IOException e) {
             System.err.println("Error reading or parsing the xlsx file\n");
