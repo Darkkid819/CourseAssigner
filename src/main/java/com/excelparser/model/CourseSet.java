@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.TreeSet;
 
-public class CourseSet implements Serializable {
+public class CourseSet implements Serializable, Cloneable {
 
     // Bill Pugh Singleton Implementation
     private static class Holder {
@@ -32,6 +32,10 @@ public class CourseSet implements Serializable {
         return courseSet.stream().filter(i -> i.getCRN() == CRN).findFirst();
     }
 
+    public void copy(CourseSet instance) {
+        this.courseSet = instance.courseSet;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -41,5 +45,12 @@ public class CourseSet implements Serializable {
             result.append("\n-----------------\n");
         }
         return result.toString();
+    }
+
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        CourseSet cloned = (CourseSet) super.clone();
+        cloned.courseSet = new TreeSet<>(this.courseSet);
+        return cloned;
     }
 }

@@ -4,14 +4,12 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.TreeSet;
 
-public class InstructorSet implements Serializable {
+public class InstructorSet implements Serializable, Cloneable {
 
     // Bill Pugh Singleton Implementation
     private static class Holder {
         private static final InstructorSet INSTANCE = new InstructorSet();
     }
-
-    private static InstructorSet instance;
     private TreeSet<Instructor> instructorSet;
 
     private InstructorSet() {
@@ -41,6 +39,10 @@ public class InstructorSet implements Serializable {
         return instructorSet.headSet(instructor, false).size();
     }
 
+    public void copy(InstructorSet instance) {
+        this.instructorSet = instance.instructorSet;
+    }
+
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder();
@@ -50,5 +52,12 @@ public class InstructorSet implements Serializable {
             result.append("\n-----------------\n");
         }
         return result.toString();
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        InstructorSet cloned = (InstructorSet) super.clone();
+        cloned.instructorSet = new TreeSet<>(this.instructorSet);
+        return cloned;
     }
 }

@@ -2,7 +2,9 @@ package com.excelparser.model;
 
 import com.excelparser.model.enums.Subject;
 
-public class Course implements Comparable<Course> {
+import java.io.Serializable;
+
+public class Course implements Comparable<Course>, Serializable {
 
     private String courseNumber, courseTitle;
     private Subject subject;

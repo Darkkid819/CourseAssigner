@@ -3,10 +3,11 @@ package com.excelparser.model;
 import com.excelparser.model.enums.Campus;
 import com.excelparser.model.enums.Rank;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InstructorInfo {
+public class InstructorInfo implements Serializable {
     private Rank rank;
     private boolean onlineCertified;
     private List<String> coursesCertified;

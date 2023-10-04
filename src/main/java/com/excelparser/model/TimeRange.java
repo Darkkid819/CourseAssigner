@@ -1,8 +1,9 @@
 package com.excelparser.model;
 
+import java.io.Serializable;
 import java.time.LocalTime;
 
-public class TimeRange {
+public class TimeRange implements Serializable {
     private LocalTime start;
     private LocalTime end;
 

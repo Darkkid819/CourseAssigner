@@ -5,10 +5,11 @@ import com.excelparser.model.enums.Day;
 import com.excelparser.model.enums.InstructionMethod;
 import com.excelparser.model.enums.PartOfTerm;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CourseInfo {
+public class CourseInfo implements Serializable {
 
     private PartOfTerm partOfTerm;
     private InstructionMethod instructionMethod;

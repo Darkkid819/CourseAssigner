@@ -1,9 +1,10 @@
 package com.excelparser.model;
 
+import java.io.Serializable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class Instructor implements Comparable<Instructor> {
+public class Instructor implements Comparable<Instructor>, Serializable {
     private final String ID;
     private Name name;
     private InstructorInfo instructorInfo;
