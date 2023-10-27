@@ -4,10 +4,38 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="gui update">
+    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="fixed serialization bug">
+      <change afterPath="$PROJECT_DIR$/backup/instructors.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backup/sections.dat" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/CourseInformation.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/Instructor_Frequency_v3.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/data/InstructorsV2.xlsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/CourseList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/DateRange.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Section.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/SectionSet.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseParser.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorParser.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/CourseInformation.csv" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/Instructors.xlsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/courses.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/instructors.dat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/CourseInfo.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/CourseSet.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ConfigurationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseCSVParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/DataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorXLSXParser.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/Serializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/Serializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/instructors.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -18,7 +46,9 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Enum" />
+        <option value="FxmlFile" />
         <option value="Class" />
+        <option value="Interface" />
       </list>
     </option>
   </component>
@@ -71,6 +101,16 @@
       <recent name="G:\Code\Java\CSE248\ExcelParser\src\main\resources\com\excelparser\images" />
     </key>
   </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.excelparser.Main" />
+      <module name="ExcelParser" />
+      <option name="PROGRAM_PARAMETERS" value="G:\Code\Java\CSE248\ExcelParser\data\InstructorsV2.xlsx G:\Code\Java\CSE248\ExcelParser\data\CourseInformation.xlsx" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -101,7 +141,12 @@
       <workItem from="1695769954356" duration="10348000" />
       <workItem from="1696365682974" duration="43000" />
       <workItem from="1696365738732" duration="19548000" />
-      <workItem from="1696460708896" duration="351000" />
+      <workItem from="1696460708896" duration="18982000" />
+      <workItem from="1696813710080" duration="367000" />
+      <workItem from="1697516032580" duration="715000" />
+      <workItem from="1698279131557" duration="18266000" />
+      <workItem from="1698299241796" duration="2686000" />
+      <workItem from="1698367227429" duration="1817000" />
     </task>
     <task id="LOCAL-00001" summary="gui">
       <option name="closed" value="true" />
@@ -167,7 +212,15 @@
       <option name="project" value="LOCAL" />
       <updated>1696388800648</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="fixed serialization bug">
+      <option name="closed" value="true" />
+      <created>1696461356802</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1696461356802</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -194,6 +247,7 @@
     <MESSAGE value="Refactored model classes" />
     <MESSAGE value="added serialization" />
     <MESSAGE value="gui update" />
-    <option name="LAST_COMMIT_MESSAGE" value="gui update" />
+    <MESSAGE value="fixed serialization bug" />
+    <option name="LAST_COMMIT_MESSAGE" value="fixed serialization bug" />
   </component>
 </project>

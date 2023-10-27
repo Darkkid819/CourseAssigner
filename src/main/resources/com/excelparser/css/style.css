@@ -1,51 +1,55 @@
 .root {
-    -fx-background-color: #FFFFFF; /* White background */
+    -color-primary: #213555;
+    -color-secondary: #4F709C;
+    -color-tertiary: #E5D283;
+    -color-accent: #F0F0F0;
 }
 
-.button {
-    -fx-background-color: #F2F2F2; /* Light gray */
-    -fx-text-fill: #000000; /* Black text */
-    -fx-font-size: 14px;
-    -fx-background-radius: 0;
+.background-primary {
+    -fx-background-color: -color-primary;
 }
 
-.button:pressed {
-    -fx-background-color: #e5e5e5; /* Light gray */
+.background-secondary {
+    -fx-background-color: -color-secondary;
 }
 
-.label {
-    -fx-font-size: 14px;
+.background-tertiary {
+    -fx-background-color: -color-tertiary;
 }
 
-.text-field {
-    -fx-font-size: 14px;
+.background-accent {
+    -fx-background-color: -color-accent;
 }
 
-.vbox > .label {
-    -fx-font-weight: bold;
-    -fx-text-fill: #000000; /* Black text */
+.nav-container {
+    transition: all 0.2s;
 }
 
-.vbox {
-    -fx-padding: 10px;
+.nav-container:hover {
+    -fx-background-color: #6791C9;
 }
 
-.button.time-slot {
-    -fx-background-color: #E6E6E6; /* Light gray */
-    -fx-text-fill: #000000; /* Black text */
-    -fx-font-size: 14px;
-    -fx-min-width: 40px;
+.nav-container:pressed {
+    -fx-background-color: #3D5777;
 }
 
-.vbox.time-slots {
-    -fx-spacing: 5px;
+.nav-container > Button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-font-size: 16px;
 }
 
-.titled-pane .title {
-    -fx-background-color: #4F81BD; /* Excel-like blue color */
-    -fx-text-fill: white;
+.nav-container:pressed > Button {
+    -fx-text-fill: -color-accent;
 }
 
-.titled-pane .content {
-    -fx-padding: 10px;
+#hamburger {
+    -fx-background-color: -color-accent;
+    -fx-background-insets: 0, 0, 1, 2;
+    -fx-background-radius: 0, 0, 0, 0;
+    -fx-background-radius: 15%;
+}
+
+#hamburger:hover {
+    -fx-cursor: hand;
 }

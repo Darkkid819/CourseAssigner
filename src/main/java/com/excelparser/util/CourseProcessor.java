@@ -6,52 +6,66 @@ import com.excelparser.model.enums.*;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-public final class CourseProcessor {
+// only accessed within util
+final class CourseProcessor {
 
-    private static final int MIN_ROW_LENGTH = 24;
+    // CourseData index values
+    private static final int COURSE_NUMBER_INDEX = 2;
+    private static final int SUBJECT_INDEX = 1;
+    private static final int DAYS_INDEX = 18;
+    private static final int START_TIME_INDEX = 19;
+    private static final int END_TIME_INDEX = 20;
+    private static final int START_DATE_INDEX = 16;
+    private static final int END_DATE_INDEX = 17;
+    private static final int SECTION_ID_INDEX = 4;
+    private static final int COURSE_TITLE_INDEX = 3;
+    private static final int CAMPUS_INDEX = 7;
+    private static final int PART_OF_TERM_INDEX = 6;
+    private static final int INSTRUCTION_METHOD_INDEX = 9;
 
-    public static void processCourses(String csvFilePath) throws IOException {
-        List<String[]> data = CourseCSVParser.parse(csvFilePath);
-        addCourses(data);
+    private CourseProcessor() {}
+
+    static void process(List<String> courseData) throws IOException {
+        final int CRN = Integer.parseInt(courseData.get(SECTION_ID_INDEX));
+        SectionSet.getInstance().search(CRN).ifPresent(section -> {
+            Course course = createCourseFromData(courseData);
+            section.addCourse(course);
+        });
+        Section section = createSectionFromData(courseData);
+        SectionSet.getInstance().add(section);
     }
 
-    private static void addCourses(List<String[]> data) {
-        data.remove(0); // remove header row
-        for (String[] row : data) {
-            if (row.length < MIN_ROW_LENGTH) continue; // skip rows with missing data
-            Course course = createCourseFromRow(row);
-            CourseSet.getInstance().add(course);
-        }
+    private static Section createSectionFromData(List<String> courseData) {
+        Section section = new Section(Integer.parseInt(courseData.get(SECTION_ID_INDEX)));
+        section.setCourseTitle(courseData.get(COURSE_TITLE_INDEX));
+        section.setCampus(Campus.valueOf(courseData.get(CAMPUS_INDEX)));
+        section.setPartOfTerm(PartOfTerm.valueOf(courseData.get(PART_OF_TERM_INDEX)));
+        section.setInstructionMethod(InstructionMethod.valueOf(courseData.get(INSTRUCTION_METHOD_INDEX)));
+        Course course = createCourseFromData(courseData);
+        section.addCourse(course);
+        return section;
     }
 
-    private static Course createCourseFromRow(String[] row) {
-        Course course = new Course(Integer.parseInt(row[4]));
-        course.setCourseTitle(row[3]);
-        course.setSubject(Subject.valueOf(row[1]));
-        course.setCourseNumber(row[2]);
-        CourseInfo courseInfo = processCourseInfo(row);
-        course.setCourseInfo(courseInfo);
+    private static Course createCourseFromData(List<String> courseData) {
+        Course course = new Course();
+        course.setCourseNumber(courseData.get(COURSE_NUMBER_INDEX));
+        course.setSubject(Subject.valueOf(courseData.get(SUBJECT_INDEX)));
+        course.setDays(processDays(courseData.get(DAYS_INDEX)));
+        course.setTimeRange(processTimeRange(courseData.get(START_TIME_INDEX), courseData.get(END_TIME_INDEX)));
+        course.setDateRange(new DateRange(courseData.get(START_DATE_INDEX), courseData.get(END_DATE_INDEX)));
+        course.setCredits(4); // all are 4 credits
+        if (course.getCourseNumber().equals("103")
+                || course.getCourseNumber().equals("210"))
+            course.setCredits(3);
         return course;
     }
 
-
-    private static CourseInfo processCourseInfo(String[] row) {
-        CourseInfo courseInfo = new CourseInfo();
-
-        courseInfo.setPartOfTerm(PartOfTerm.valueOf(row[6]));
-        courseInfo.setInstructionMethod(InstructionMethod.valueOf(row[9]));
-        courseInfo.setDays(processDays(row[18]));
-        courseInfo.setCampus(Campus.valueOf(row[7]));
-        courseInfo.setTimeRange(processTimeRange(row[19], row[20]));
-
-        return courseInfo;
-    }
-
-    private static ArrayList<Day> processDays(String cell) {
-        ArrayList<Day> days = new ArrayList<>(7);
+    private static Set<Day> processDays(String cell) {
+        HashSet<Day> days = new HashSet<>(8);
         char[] daysOfWeek = cell.toCharArray();
         for (char c: daysOfWeek) {
             String day = String.valueOf(c);

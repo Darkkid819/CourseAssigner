@@ -24,10 +24,6 @@ public class InstructorSet implements Serializable, Cloneable {
         instructorSet.add(instructor);
     }
 
-    public void remove(String id) {
-        instructorSet.removeIf(i -> i.getId().equals(id));
-    }
-
     public Optional<Instructor> search(String id) {
         return instructorSet.stream().filter(i -> i.getId().equals(id)).findFirst();
     }
@@ -48,7 +44,7 @@ public class InstructorSet implements Serializable, Cloneable {
         StringBuilder result = new StringBuilder();
         result.append("-----------------\n");
         for (Instructor instructor : instructorSet) {
-            result.append(instructor.toString());
+            result.append(instructor);
             result.append("\n-----------------\n");
         }
         return result.toString();
