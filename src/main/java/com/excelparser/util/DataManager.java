@@ -9,9 +9,9 @@ public final class DataManager {
 
     private DataManager() {}
 
-    public static void loadData(String[] args) {
+    public static void loadData() {
         if (!ConfigurationManager.serializedFilesExist()) {
-            init(args);
+            init();
             return;
         }
         try {
@@ -22,12 +22,10 @@ public final class DataManager {
             InstructorSet.getInstance().copy(loadedInstructorSet);
         } catch (IOException | ClassNotFoundException e) {
                 e.printStackTrace();
-                init(args);
         }
     }
 
-    private static void init(String[] args) {
-        ConfigurationManager.configure(args);
+    private static void init() {
         parseFiles();
         saveData();
     }

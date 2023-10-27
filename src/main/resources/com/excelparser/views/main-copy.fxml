@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollBar?>
+<?import javafx.scene.control.Spinner?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import org.kordamp.ikonli.javafx.FontIcon?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <left>
+            <VBox BorderPane.alignment="CENTER">
+               <children>
+                  <HBox>
+                     <children>
+                        <TextField fx:id="idTextField" prefHeight="25.0" prefWidth="121.0" promptText="Enter ID Number" HBox.hgrow="ALWAYS" />
+                        <Button contentDisplay="RIGHT" mnemonicParsing="false" onAction="#searchByID" text="Search">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-search" iconSize="17" />
+                           </graphic>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets left="14.0" />
+                     </VBox.margin>
+                  </HBox>
+                  <Spinner maxWidth="1.7976931348623157E308" prefHeight="30.0">
+                     <VBox.margin>
+                        <Insets left="14.0" />
+                     </VBox.margin>
+                  </Spinner>
+                  <VBox nodeOrientation="LEFT_TO_RIGHT" prefHeight="340.0" prefWidth="222.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <ScrollBar orientation="VERTICAL" VBox.vgrow="ALWAYS" />
+                     </children>
+                  </VBox>
+               </children>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+            </VBox>
+         </left>
+         <bottom>
+            <HBox alignment="CENTER" prefWidth="714.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Monday" />
+                        <Button fx:id="monday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="monday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="monday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="monday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="monday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="monday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Tuesday" />
+                        <Button fx:id="tuesday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="tuesday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="tuesday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="tuesday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="tuesday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="tuesday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Wednesday" />
+                        <Button fx:id="wednesday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="wednesday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="wednesday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="wednesday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="wednesday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="wednesday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Thursday" />
+                        <Button fx:id="thursday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="thursday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="thursday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="thursday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="thursday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="thursday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Friday" />
+                        <Button fx:id="friday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="friday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="friday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="friday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="friday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="friday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Saturday" />
+                        <Button fx:id="saturday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="saturday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="saturday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="saturday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="saturday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="saturday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+                  <VBox alignment="TOP_CENTER" prefWidth="24.0" styleClass="time-slots" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Label text="Sunday" />
+                        <Button fx:id="sunday7to8" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="7-8" />
+                        <Button fx:id="sunday8to12" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="8-12" />
+                        <Button fx:id="sunday12to3" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="12-3" />
+                        <Button fx:id="sunday3to4" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="3-4" />
+                        <Button fx:id="sunday4to6" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="4-6" />
+                        <Button fx:id="sunday6to10" disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" styleClass="time-slot" text="6-10" />
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </bottom>
+         <center>
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+               <children>
+                  <ListView maxWidth="1.7976931348623157E308" prefHeight="250.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+                  <VBox alignment="CENTER" layoutY="250.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="250.0">
+                     <children>
+                        <Button contentDisplay="RIGHT" mnemonicParsing="false" text="Commit">
+                           <graphic>
+                              <FontIcon iconLiteral="fas-check" iconSize="18" />
+                           </graphic>
+                        </Button>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </center>
+         <top>
+            <MenuBar BorderPane.alignment="CENTER">
+              <menus>
+                <Menu mnemonicParsing="false" text="File">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Close" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Edit">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Help">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="About" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+         </top>
+      </BorderPane>
+   </children>
+</AnchorPane>
