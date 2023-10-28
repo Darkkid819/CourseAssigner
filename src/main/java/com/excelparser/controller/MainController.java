@@ -3,117 +3,193 @@ package com.excelparser.controller;
 import com.excelparser.model.Instructor;
 import com.excelparser.model.InstructorInfo;
 import com.excelparser.model.InstructorSet;
-import javafx.event.Event;
+import com.excelparser.model.SeniorityList;
+import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Optional;
+import java.util.ResourceBundle;
 
 public class MainController implements Initializable {
 
-    // Constants
     private static final String AVAILABLE_COLOR = "#008000";
     private static final String UNAVAILABLE_COLOR = "#EB4034";
 
-    InstructorSet instructorList;
-    Instructor[] instructors;
-    InstructorInfo instructorInfo;
-    int currentInstructor = 0;
+    InstructorSet instructorSet;
     private Button[][] timeSlotButtons;
-    @FXML TextField idTextField;
-    @FXML Label nameLabel;
-    @FXML Label idLabel;
-    @FXML Label rankLabel;
-    @FXML Button monday7to8;
-    @FXML Label homeCampusLabel;
-    @FXML Label preferredCampusLabel;
-    @FXML Label onlineCertifiedLabel;
-    @FXML Label coursesCertifiedLabel;
-    @FXML Label coursesRequestedLabel;
-    @FXML ListView instructorListView;
 
-    @FXML Button monday8to12;
-    @FXML Button monday12to3;
-    @FXML Button monday3to4;
-    @FXML Button monday4to6;
-    @FXML Button monday6to10;
+    @FXML
+    private Label campusLabel;
 
-    @FXML Button tuesday7to8;
-    @FXML Button tuesday8to12;
-    @FXML Button tuesday12to3;
-    @FXML Button tuesday3to4;
-    @FXML Button tuesday4to6;
-    @FXML Button tuesday6to10;
+    @FXML
+    private TableView<?> courseTableView;
 
-    @FXML Button wednesday7to8;
-    @FXML Button wednesday8to12;
-    @FXML Button wednesday12to3;
-    @FXML Button wednesday3to4;
-    @FXML Button wednesday4to6;
-    @FXML Button wednesday6to10;
+    @FXML
+    private Button finalizeButton;
 
-    @FXML Button thursday7to8;
-    @FXML Button thursday8to12;
-    @FXML Button thursday12to3;
-    @FXML Button thursday3to4;
-    @FXML Button thursday4to6;
-    @FXML Button thursday6to10;
+    @FXML
+    private Button friday12to3;
 
-    @FXML Button friday7to8;
-    @FXML Button friday8to12;
-    @FXML Button friday12to3;
-    @FXML Button friday3to4;
-    @FXML Button friday4to6;
-    @FXML Button friday6to10;
+    @FXML
+    private Button friday3to4;
 
-    @FXML Button saturday7to8;
-    @FXML Button saturday8to12;
-    @FXML Button saturday12to3;
-    @FXML Button saturday3to4;
-    @FXML Button saturday4to6;
-    @FXML Button saturday6to10;
+    @FXML
+    private Button friday4to6;
 
-    @FXML Button sunday7to8;
-    @FXML Button sunday8to12;
-    @FXML Button sunday12to3;
-    @FXML Button sunday3to4;
-    @FXML Button sunday4to6;
-    @FXML Button sunday6to10;
+    @FXML
+    private Button friday6to10;
+
+    @FXML
+    private Button friday7to8;
+
+    @FXML
+    private Button friday8to12;
+
+    @FXML
+    private Label idLabel;
+
+    @FXML
+    private TextField idTextField;
+
+    @FXML
+    private Button monday12to3;
+
+    @FXML
+    private Button monday3to4;
+
+    @FXML
+    private Button monday4to6;
+
+    @FXML
+    private Button monday6to10;
+
+    @FXML
+    private Button monday7to8;
+
+    @FXML
+    private Button monday8to12;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Spinner<Instructor> nameSpinner;
+
+    @FXML
+    private Label rankLabel;
+
+    @FXML
+    private Button saturday12to3;
+
+    @FXML
+    private Button saturday3to4;
+
+    @FXML
+    private Button saturday4to6;
+
+    @FXML
+    private Button saturday6to10;
+
+    @FXML
+    private Button saturday7to8;
+
+    @FXML
+    private Button saturday8to12;
+
+    @FXML
+    private TableView<?> sectionTableView;
+
+    @FXML
+    private Button sunday12to3;
+
+    @FXML
+    private Button sunday3to4;
+
+    @FXML
+    private Button sunday4to6;
+
+    @FXML
+    private Button sunday6to10;
+
+    @FXML
+    private Button sunday7to8;
+
+    @FXML
+    private Button sunday8to12;
+
+    @FXML
+    private Button thursday12to3;
+
+    @FXML
+    private Button thursday3to4;
+
+    @FXML
+    private Button thursday4to6;
+
+    @FXML
+    private Button thursday6to10;
+
+    @FXML
+    private Button thursday7to8;
+
+    @FXML
+    private Button thursday8to12;
+
+    @FXML
+    private Button tuesday12to3;
+
+    @FXML
+    private Button tuesday3to4;
+
+    @FXML
+    private Button tuesday4to6;
+
+    @FXML
+    private Button tuesday6to10;
+
+    @FXML
+    private Button tuesday7to8;
+
+    @FXML
+    private Button tuesday8to12;
+
+    @FXML
+    private Button wednesday12to3;
+
+    @FXML
+    private Button wednesday3to4;
+
+    @FXML
+    private Button wednesday4to6;
+
+    @FXML
+    private Button wednesday6to10;
+
+    @FXML
+    private Button wednesday7to8;
+
+    @FXML
+    private Button wednesday8to12;
 
     @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        instructorList = InstructorSet.getInstance();
-        instructors = instructorList.toArray();
-        initializeListView();
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        instructorSet = InstructorSet.getInstance();
         initializeTimeSlotButtons();
-        updateInstructor();
+        initializeSpinner();
     }
 
-    private void initializeListView() {
-        instructorListView.getItems().addAll(instructors);
-        instructorListView.setCellFactory(param -> new ListCell<Instructor>() {
-            @Override
-            protected void updateItem(Instructor instructor, boolean empty) {
-                super.updateItem(instructor, empty);
-
-                if (empty || instructor == null) {
-                    setText(null);
-                } else {
-                    setText(instructor.getName().toString());  // or any other property of the Instructor
-                }
-            }
+    private void initializeSpinner() {
+        ObservableList<Instructor> options = SeniorityList.getInstance().toObservableList();
+        SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
+        nameSpinner.setValueFactory(valueFactory);
+        nameSpinner.valueProperty().addListener((observableValue, instructor, t1) -> {
+            updateInstructor();
         });
-        instructorListView.setOnMouseClicked(event -> {
-            Instructor selectedInstructor = (Instructor) instructorListView.getSelectionModel().getSelectedItem();
-            if (selectedInstructor != null) {
-                currentInstructor = instructorList.index(selectedInstructor);
-                updateInstructor();
-            }
-        });
+        updateInstructor(); // initialize
     }
 
     private void initializeTimeSlotButtons() {
@@ -127,45 +203,16 @@ public class MainController implements Initializable {
         };
     }
 
-    public void nextInstructor() {
-        if (currentInstructor < instructors.length - 1) {
-            currentInstructor++;
-            updateInstructor();
-        }
-    }
-
-    public void previousInstructor() {
-        if (currentInstructor > 0) {
-            currentInstructor--;
-            updateInstructor();
-        }
-    }
-
     private void updateInstructor() {
-        instructorInfo = instructors[currentInstructor].getInstructorInfo();
-
-        nameLabel.setText(instructors[currentInstructor].getName().toString());
-        idLabel.setText(instructors[currentInstructor].getId());
-        rankLabel.setText(instructorInfo.getRank().toString());
-        homeCampusLabel.setText(instructors[currentInstructor].getHomeCampus());
-        preferredCampusLabel.setText(listToString(instructorInfo.getPreferredCampuses()));
-        onlineCertifiedLabel.setText((instructorInfo.isOnlineCertified() ? "Yes" : "No"));
-        coursesCertifiedLabel.setText(listToString(instructorInfo.getCoursesCertified()));
-        coursesRequestedLabel.setText(String.valueOf(instructors[currentInstructor].getCoursesRequested()));
+        nameLabel.setText(nameSpinner.getValue().getName().toString());
+        idLabel.setText(nameSpinner.getValue().getId());
+        rankLabel.setText(nameSpinner.getValue().getInstructorInfo().getRank().toString());
+        campusLabel.setText(nameSpinner.getValue().getHomeCampus());
         updateAvailability();
     }
 
-    // Custom List toString to avoid brackets
-    private static String listToString(List<?> list) {
-        StringBuilder result = new StringBuilder();
-        for (int i = 0; i < list.size(); i++) {
-            result.append(list.get(i).toString() + " ");
-        }
-        return result.toString();
-    }
-
     public void updateAvailability() {
-        Instructor instructor = instructors[currentInstructor];
+        Instructor instructor = nameSpinner.getValue();
         boolean[][] availability = instructor.getAvailability();
 
         for (int slot = 0; slot < timeSlotButtons.length; slot++) {
@@ -193,14 +240,11 @@ public class MainController implements Initializable {
             return;
         }
 
-        Optional<Instructor> foundInstructor = instructorList.search(idText);
-
-        if (foundInstructor.isPresent()) {
-            currentInstructor = instructorList.index(foundInstructor.get());
+        Optional<Instructor> foundInstructor = instructorSet.search(idText);
+        foundInstructor.ifPresentOrElse(instructor -> {
+            nameSpinner.getValueFactory().setValue(instructor);
             updateInstructor();
-        } else {
-            showErrorDialog("No instructor found with ID: " + idText);
-        }
+        }, () -> showErrorDialog("No instructor found with ID: " + idText));
     }
 
     private void showErrorDialog(String message) {
@@ -209,5 +253,20 @@ public class MainController implements Initializable {
         alert.setHeaderText(null);
         alert.setContentText(message);
         alert.showAndWait();
+    }
+
+    @FXML
+    void addCourse(ActionEvent event) {
+
+    }
+
+    @FXML
+    void finalize(ActionEvent event) {
+
+    }
+
+    @FXML
+    void removeCourse(ActionEvent event) {
+
     }
 }

@@ -6,7 +6,6 @@ import java.util.TreeSet;
 
 public class SectionSet implements Serializable {
 
-    // Bill Pugh Singleton Implementation
     private static class Holder {
         private static final SectionSet INSTANCE = new SectionSet();
     }

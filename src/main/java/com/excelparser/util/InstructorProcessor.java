@@ -36,6 +36,7 @@ final class InstructorProcessor{
     static void process(List<String> instructorData) throws IOException {
         Instructor instructor = createInstructorFromData(instructorData);
         InstructorSet.getInstance().add(instructor);
+        SeniorityList.getInstance().add(instructor);
     }
 
     private static Instructor createInstructorFromData(List<String> instructorData) {

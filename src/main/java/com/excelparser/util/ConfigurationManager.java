@@ -11,6 +11,7 @@ public final class ConfigurationManager {
     private static String frequencyPath;
     private static final String SECTIONS_FILE = "./backup/sections.dat";
     private static final String INSTRUCTORS_FILE = "./backup/instructors.dat";
+    private static final String SENIORITY_FILE = "./backup/seniority.dat";
 
     private ConfigurationManager() {}
 
@@ -27,7 +28,7 @@ public final class ConfigurationManager {
     public static String getCoursePath() {
         return coursePath;
     }
-    public static String getFrequencyPathPath() {
+    public static String getFrequencyPath() {
         return frequencyPath;
     }
 
@@ -36,7 +37,9 @@ public final class ConfigurationManager {
     }
 
     public static boolean serializedFilesExist() {
-        return Files.exists(Paths.get(SECTIONS_FILE)) && Files.exists(Paths.get(INSTRUCTORS_FILE));
+        return Files.exists(Paths.get(SECTIONS_FILE))
+                && Files.exists(Paths.get(INSTRUCTORS_FILE))
+                && Files.exists(Paths.get(SENIORITY_FILE));
     }
 
     public static String getSectionsFile() {
@@ -45,5 +48,9 @@ public final class ConfigurationManager {
 
     public static String getInstructorsFile() {
     return INSTRUCTORS_FILE;
+    }
+
+    public static String getSeniorityFile() {
+        return SENIORITY_FILE;
     }
 }

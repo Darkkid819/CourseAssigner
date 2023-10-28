@@ -4,6 +4,7 @@ import com.excelparser.Main;
 import com.excelparser.util.ConfigurationManager;
 import com.excelparser.util.DataManager;
 import com.excelparser.util.ViewManager;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -80,24 +81,11 @@ public class ImportController {
             alert.setHeaderText("Path Missing");
             alert.setContentText("Please ensure all file paths are provided before importing.");
             alert.showAndWait();
-            return;
-        }
-
-        try {
-            load();
-        } catch (Exception e) {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Import Error");
-            alert.setHeaderText("Failed to Import");
-            alert.setContentText("There was an error during import. Please check the provided files and try again.");
-            alert.showAndWait();
-        }
+        } else load();
     }
 
     private void load() {
-        for (Node node: stack.getChildren()) {
-            node.setVisible(!node.isVisible());
-        }
+        switchView();
         Task<Void> loadDataTask = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
@@ -109,8 +97,23 @@ public class ImportController {
             }
         };
         loadDataTask.setOnSucceeded(event -> close());
+        loadDataTask.setOnFailed(event ->{
+            switchView();
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Import Error");
+            alert.setHeaderText("Failed to Import");
+            alert.setContentText("There was an error during import. Please check the provided files and try again.");
+            alert.showAndWait();
+        });
 
         new Thread(loadDataTask).start();
+    }
+
+    // switches between import view and progress view
+    private void switchView() {
+        for (Node node: stack.getChildren()) {
+            node.setVisible(!node.isVisible());
+        }
     }
 
     private void close() {

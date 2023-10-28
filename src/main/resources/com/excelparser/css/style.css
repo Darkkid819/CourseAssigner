@@ -56,7 +56,7 @@ TextField {
     -fx-text-fill: black;
 }
 
-/* ---- Progress Indicator ---- */
+/* ---- Progress Indicators ---- */
 ProgressIndicator:indeterminate {
     -fx-progress-color: silver;
 }
@@ -68,4 +68,13 @@ ProgressIndicator:indeterminate > Spinner {
 ProgressIndicator:indeterminate > Spinner > Arc {
     -fx-stroke: silver;
     -fx-stroke-width: 4;
+}
+
+/* ---- Spinners ---- */
+Spinner {
+
+}
+
+Spinner .increment-arrow-button, .spinner .decrement-arrow-button {
+
 }

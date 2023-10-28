@@ -61,16 +61,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
 
     @Override
     public String toString() {
-        return new StringBuilder()
-                .append("Instructor ID: ").append(ID)
-                .append("\nName: ").append(name)
-                .append("\nRank: ").append(instructorInfo.getRank())
-                .append("\nHome Campus: ").append(homeCampus)
-                .append("\nPreferred Campuses: ").append(instructorInfo.getPreferredCampuses())
-                .append("\nOnline Certified: ").append(instructorInfo.isOnlineCertified() ? "Yes" : "No")
-                .append("\nCourses Certified: ").append(String.join(", ", instructorInfo.getCoursesCertified()))
-                .append("\nCourses Requested: ").append(coursesRequested)
-                .toString();
+        return name.toString();
     }
 
     @Override

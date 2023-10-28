@@ -57,7 +57,7 @@ final class CourseProcessor {
         course.setDays(processDays(courseData.get(DAYS_INDEX)));
         course.setTimeRange(processTimeRange(courseData.get(START_TIME_INDEX), courseData.get(END_TIME_INDEX)));
         course.setDateRange(new DateRange(courseData.get(START_DATE_INDEX), courseData.get(END_DATE_INDEX)));
-        course.setCredits(4); // all are 4 credits
+        course.setCredits(4); // all are 4 credits except MAT103 and MAT210
         if (course.getCourseNumber().equals("103")
                 || course.getCourseNumber().equals("210"))
             course.setCredits(3);

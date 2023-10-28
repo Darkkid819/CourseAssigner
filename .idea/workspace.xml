@@ -4,19 +4,25 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="added a lot of changes">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/ImportController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ViewManager.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/import.fxml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" afterDir="false" />
+    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="import view">
+      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/SeniorityList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main1.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backup/instructors.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backup/sections.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/ImportController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/ImportController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/SectionSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/SectionSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ConfigurationManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/DataManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/instructors.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main-copy.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main-copy.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,6 +87,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="G:\Code\Java\CSE248\ExcelParser\src\main\resources\com\excelparser\images" />
     </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.excelparser.controller" />
+    </key>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -117,7 +126,9 @@
       <workItem from="1697516032580" duration="715000" />
       <workItem from="1698279131557" duration="18266000" />
       <workItem from="1698299241796" duration="2686000" />
-      <workItem from="1698367227429" duration="14095000" />
+      <workItem from="1698367227429" duration="15095000" />
+      <workItem from="1698433211592" duration="2197000" />
+      <workItem from="1698521674465" duration="9202000" />
     </task>
     <task id="LOCAL-00001" summary="gui">
       <option name="closed" value="true" />
@@ -199,7 +210,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698369073278</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="import view">
+      <option name="closed" value="true" />
+      <created>1698383409226</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1698383409226</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -228,6 +247,7 @@
     <MESSAGE value="gui update" />
     <MESSAGE value="fixed serialization bug" />
     <MESSAGE value="added a lot of changes" />
-    <option name="LAST_COMMIT_MESSAGE" value="added a lot of changes" />
+    <MESSAGE value="import view" />
+    <option name="LAST_COMMIT_MESSAGE" value="import view" />
   </component>
 </project>
