@@ -1,7 +1,9 @@
 package com.excelparser.controller;
 
 import com.excelparser.model.*;
+import com.excelparser.model.enums.Campus;
 import com.excelparser.model.enums.Day;
+import com.excelparser.model.enums.InstructionMethod;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -15,8 +17,8 @@ import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 import java.net.URL;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.time.LocalTime;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
@@ -223,6 +225,8 @@ public class MainController implements Initializable {
         SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
         nameSpinner.setValueFactory(valueFactory);
         nameSpinner.valueProperty().addListener((observableValue, instructor, t1) -> {
+            courseTableView.getItems().clear();
+            sectionTableView.scrollTo(0);
             updateInstructor();
         });
         updateInstructor(); // initialize
@@ -245,8 +249,8 @@ public class MainController implements Initializable {
         instructionMethodColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getInstructionMethod().toString()));
         partOfTermColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPartOfTerm().toString()));
 
-        ObservableList<Section> data = FXCollections.observableList(SectionSet.getInstance().toList());
-        sectionTableView.setItems(data);
+        nameSpinner.valueProperty().addListener((observable, oldValue, newValue) -> updateSectionTableView(newValue));
+        updateSectionTableView(nameSpinner.getValue());
 
         sectionTableView.setRowFactory(tv -> {
             TableRow<Section> row = new TableRow<>();
@@ -260,6 +264,72 @@ public class MainController implements Initializable {
             });
             return row;
         });
+    }
+
+    // a lot of magic going on here
+    private void updateSectionTableView(Instructor instructor) {
+        Map<String, Integer> frequencies = instructor.getFrequencies().getAllFrequencies()
+                .entrySet()
+                .stream()
+                .collect(Collectors.toMap(
+                        entry -> entry.getKey().toString(),
+                        Map.Entry::getValue
+                ));
+
+        boolean[] daysAvailable = getDaysAvailable(instructor);
+        boolean[][] timeAvailability = instructor.getAvailability();
+        List<Campus> preferredCampuses = instructor.getInstructorInfo().getPreferredCampuses();
+
+        List<Section> filteredSections = SectionSet.getInstance().toList().stream()
+                .filter(section -> { // filter sections not taught by instructor
+                    String courseName = section.getCourseList().get(0).toString();
+                    return instructor.getInstructorInfo().getCoursesCertified().contains(courseName);
+                })
+                .filter(section -> { // filter sections not taught online by instructor
+                    return !section.getInstructionMethod().name().equals("BLBD") || instructor.getInstructorInfo().isOnlineCertified();
+                })
+                .filter(section -> { // filter sections based on instructor availability
+                    return section.getCourseList().stream().allMatch(course -> {
+                        for (Day day : course.getDays()) {
+                            int dayIndex = day.ordinal();
+                            if (day != Day.O && !daysAvailable[dayIndex]) {
+                                return false;
+                            }
+
+                            TimeRange timeRange = course.getTimeRange();
+                            if (timeRange != null) {
+                                int startPeriod = getTimePeriodIndex(timeRange.getStart());
+                                int endPeriod = getTimePeriodIndex(timeRange.getEnd());
+                                for (int i = startPeriod; i <= endPeriod; i++) {
+                                    if (!timeAvailability[i][dayIndex]) { // Check if any of the periods during the course's time range is unavailable
+                                        return false;
+                                    }
+                                }
+                            }
+                        }
+                        return true;
+                    });
+                })
+                .filter(section -> {
+                    if (section.getInstructionMethod().name().equals("BLBD")) {
+                        return preferredCampuses.contains(Campus.O);
+                    }
+                    return preferredCampuses.contains(section.getCampus());
+                })
+                .sorted(
+                        Comparator.comparing((Section section) -> frequencies.getOrDefault(section.getCourseList().get(0).toString(), Integer.MIN_VALUE), Comparator.reverseOrder())
+                                .thenComparing(section -> section.getCourseList().get(0).toString())
+                                .thenComparing(section -> {
+                                    if (section.getInstructionMethod().toString().contains("Online")) {
+                                        return preferredCampuses.indexOf(Campus.O);
+                                    }
+                                    return preferredCampuses.indexOf(section.getCampus());
+                                })
+                )
+                .collect(Collectors.toList());
+
+        ObservableList<Section> data = FXCollections.observableList(filteredSections);
+        sectionTableView.setItems(data);
     }
 
     private void initializeCourseTableView(Section section) {
@@ -282,8 +352,61 @@ public class MainController implements Initializable {
         startDateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange().getFormattedStart()));
         endDateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange().getFormattedEnd()));
 
-        ObservableList<Course> data = FXCollections.observableList(section.getCourseList());
+        updateCourseTableView(section, nameSpinner.getValue());
+    }
+
+    private void updateCourseTableView(Section section, Instructor instructor) {
+        Instructor currentInstructor = nameSpinner.getValue();
+        boolean[] daysAvailable = getDaysAvailable(currentInstructor);
+        boolean[][] timeAvailability = instructor.getAvailability(); // Assuming this method exists
+
+        List<Course> filteredCourses = section.getCourseList().stream()
+                .filter(course -> {
+                    for (Day day : course.getDays()) {
+                        int dayIndex = day.ordinal();
+                        if (day != Day.O && !daysAvailable[dayIndex]) { // Skip "Online" and check day availability
+                            return false;
+                        }
+
+                        TimeRange timeRange = course.getTimeRange();
+                        if (timeRange != null) {
+                            int startPeriod = getTimePeriodIndex(timeRange.getStart());
+                            int endPeriod = getTimePeriodIndex(timeRange.getEnd());
+                            for (int i = startPeriod; i <= endPeriod; i++) {
+                                if (!timeAvailability[i][dayIndex]) { // Check if any of the periods during the course's time range is unavailable
+                                    return false;
+                                }
+                            }
+                        }
+                    }
+                    return true;
+                })
+                .collect(Collectors.toList());
+
+        ObservableList<Course> data = FXCollections.observableList(filteredCourses);
         courseTableView.setItems(data);
+    }
+
+    private int getTimePeriodIndex(LocalTime time) {
+        if (time.isBefore(LocalTime.of(8, 0))) return 0;
+        if (time.isBefore(LocalTime.of(12, 0))) return 1;
+        if (time.isBefore(LocalTime.of(15, 0))) return 2;
+        if (time.isBefore(LocalTime.of(16, 0))) return 3;
+        if (time.isBefore(LocalTime.of(18, 0))) return 4;
+        return 5;
+    }
+
+    private boolean[] getDaysAvailable(Instructor currentInstructor) {
+        boolean[] daysAvailable = new boolean[7];
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j < 6; j++) { // Iterate over periods
+                if (currentInstructor.getAvailability()[j][i]) {
+                    daysAvailable[i] = true;
+                    break;
+                }
+            }
+        }
+        return daysAvailable;
     }
 
     private void updateInstructor() {

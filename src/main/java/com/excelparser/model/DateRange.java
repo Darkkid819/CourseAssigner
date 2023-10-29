@@ -1,12 +1,14 @@
 package com.excelparser.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class DateRange implements Serializable {
-    private transient final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("M/d/yyyy");
+    private transient DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("M/d/yyyy");
     private LocalDate start;
     private LocalDate end;
 
@@ -60,5 +62,11 @@ public class DateRange implements Serializable {
     public String toString() {
 
         return "DateRange [start=" + start.format(FORMATTER) + ", end=" + end.format(FORMATTER) + "]";
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+        ois.defaultReadObject();
+        // initialize transient variable
+        FORMATTER = DateTimeFormatter.ofPattern("M/d/yyyy");
     }
 }

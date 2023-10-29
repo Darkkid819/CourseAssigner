@@ -1,12 +1,13 @@
 package com.excelparser.model;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.DateTimeParseException;
 
 public class TimeRange implements Serializable {
-    private transient final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("h:mm a");
+    private transient DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("h:mm a");
 
     private LocalTime start;
     private LocalTime end;
@@ -74,15 +75,21 @@ public class TimeRange implements Serializable {
     }
 
     public String getFormattedStart() {
-        return start.format(TIME_FORMAT);
+        return start.format(FORMATTER);
     }
 
     public String getFormattedEnd() {
-        return end.format(TIME_FORMAT);
+        return end.format(FORMATTER);
     }
 
     @Override
     public String toString() {
-        return "TimeRange [start=" + start.format(TIME_FORMAT) + ", end=" + end.format(TIME_FORMAT) + "]";
+        return "TimeRange [start=" + start.format(FORMATTER) + ", end=" + end.format(FORMATTER) + "]";
+    }
+
+    private void readObject(ObjectInputStream ois) throws ClassNotFoundException, IOException {
+        ois.defaultReadObject();
+        // initialize transient variable
+        FORMATTER = DateTimeFormatter.ofPattern("h:mm a");
     }
 }

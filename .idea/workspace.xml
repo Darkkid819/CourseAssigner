@@ -4,30 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="gui update">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Frequencies.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/FrequencyParser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/FrequencyProcessor.java" afterDir="false" />
+    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="added course frequencies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/instructors.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/sections.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/seniority.dat" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/DateRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/DateRange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Instructor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/InstructorSet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/SectionSet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/SectionSet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/TimeRange.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/TimeRange.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/Campus.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/Campus.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/Day.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/Day.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/InstructionMethod.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/InstructionMethod.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/PartOfTerm.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/enums/PartOfTerm.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ConfigurationManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/ConfigurationManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/CourseProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/DataManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/DataManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/InstructorProcessor.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -133,7 +114,8 @@
       <workItem from="1698299241796" duration="2686000" />
       <workItem from="1698367227429" duration="15095000" />
       <workItem from="1698433211592" duration="2197000" />
-      <workItem from="1698521674465" duration="27755000" />
+      <workItem from="1698521674465" duration="28791000" />
+      <workItem from="1698596356847" duration="14447000" />
     </task>
     <task id="LOCAL-00001" summary="gui">
       <option name="closed" value="true" />
@@ -231,7 +213,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698532651577</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="added course frequencies">
+      <option name="closed" value="true" />
+      <created>1698553907565</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1698553907565</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -261,6 +251,7 @@
     <MESSAGE value="added a lot of changes" />
     <MESSAGE value="import view" />
     <MESSAGE value="gui update" />
-    <option name="LAST_COMMIT_MESSAGE" value="gui update" />
+    <MESSAGE value="added course frequencies" />
+    <option name="LAST_COMMIT_MESSAGE" value="added course frequencies" />
   </component>
 </project>
