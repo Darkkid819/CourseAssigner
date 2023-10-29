@@ -12,6 +12,7 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     private int coursesRequested;
     private boolean[][] availability;
     private final int PERIOD = 6, DAYS = 7;
+    private Frequencies frequencies;
 
     // need to use setters to set the values of the other fields
     public Instructor(String id) {
@@ -58,6 +59,10 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     }
 
     public void setAvailability(boolean[][] availability) {this.availability = availability;}
+
+    public void setFrequencies(Frequencies frequencies) { this.frequencies = frequencies; }
+
+    public Frequencies getFrequencies() { return frequencies; }
 
     @Override
     public String toString() {

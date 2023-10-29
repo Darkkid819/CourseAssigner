@@ -1,10 +1,17 @@
 package com.excelparser.model.enums;
 
 public enum PartOfTerm {
-    FE, FD, SS, LSD, ONL, LS, LSE, ED; // LS and ED are not supposed to be valid
+    FE("Evening"), FD("Day"), SS("Saturday or Sunday"), LSD("Late Start Day"),
+    ONL("Online"), LS("Late Start"), LSE("Late Start Evening"), ED("Early Day");
+
+    private String partOfTerm;
+
+    private PartOfTerm(String partOfTerm) {
+        this.partOfTerm = partOfTerm;
+    }
 
     @Override
     public String toString() {
-        return this.name();
+        return partOfTerm;
     }
 }

@@ -87,7 +87,7 @@ final class InstructorProcessor{
 
     private static Name parseName(String name) {
         String[] parts = name.split(",");
-        return new Name(parts[0].trim(), parts[1].trim());
+        return new Name(parts[1].trim(), parts[0].trim());
     }
 
     private static ArrayList<Campus> parsePreferredCampuses(String preferredCampuses) {

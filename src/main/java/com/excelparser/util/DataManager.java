@@ -47,6 +47,7 @@ public final class DataManager {
     private static void parseFiles() {
         parseCourses();
         parseInstructors();
+        parseFrequency();
     }
 
     private static void parseCourses() {
@@ -65,6 +66,16 @@ public final class DataManager {
             System.out.println("Instructor data parsed successfully\n");
         } catch (IOException e) {
             System.err.println("Error reading or parsing the instructors file\n");
+            e.printStackTrace();
+        }
+    }
+
+    private static void parseFrequency() {
+        try {
+            FrequencyParser.parse(ConfigurationManager.getFrequencyPath());
+            System.out.println("Frequencies data parsed successfully\n");
+        } catch (IOException e) {
+            System.err.println("Error reading or parsing the frequency file\n");
             e.printStackTrace();
         }
     }

@@ -2,8 +2,12 @@ package com.excelparser.model;
 
 import java.io.Serializable;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 public class TimeRange implements Serializable {
+    private transient final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("h:mm a");
+
     private LocalTime start;
     private LocalTime end;
 
@@ -11,8 +15,8 @@ public class TimeRange implements Serializable {
         validateTime(h1, m1);
         validateTime(h2, m2);
 
-        LocalTime potentialStart = LocalTime.of(h1, m1);
-        LocalTime potentialEnd = LocalTime.of(h2, m2);
+        LocalTime potentialStart = convertTo12Hour(h1, m1);
+        LocalTime potentialEnd = convertTo12Hour(h2, m2);
 
         validateTimeOrder(potentialStart, potentialEnd);
 
@@ -29,6 +33,16 @@ public class TimeRange implements Serializable {
 
         this.start = start;
         this.end = end;
+    }
+
+    private LocalTime convertTo12Hour(int hour, int minute) {
+        if (hour < 12) {
+            return LocalTime.of(hour, minute);
+        } else if (hour == 12) {
+            return LocalTime.of(hour, minute);
+        } else {
+            return LocalTime.of(hour - 12, minute);
+        }
     }
 
     private void validateTime(int hour, int minute) {
@@ -59,8 +73,16 @@ public class TimeRange implements Serializable {
         this.end = end;
     }
 
+    public String getFormattedStart() {
+        return start.format(TIME_FORMAT);
+    }
+
+    public String getFormattedEnd() {
+        return end.format(TIME_FORMAT);
+    }
+
     @Override
     public String toString() {
-        return "TimeRange [start=" + start + ", end=" + end + "]";
+        return "TimeRange [start=" + start.format(TIME_FORMAT) + ", end=" + end.format(TIME_FORMAT) + "]";
     }
 }

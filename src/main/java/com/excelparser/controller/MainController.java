@@ -1,18 +1,23 @@
 package com.excelparser.controller;
 
-import com.excelparser.model.Instructor;
-import com.excelparser.model.InstructorInfo;
-import com.excelparser.model.InstructorSet;
-import com.excelparser.model.SeniorityList;
+import com.excelparser.model.*;
+import com.excelparser.model.enums.Day;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.ReadOnlyStringWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.text.Font;
+import javafx.scene.text.Text;
 
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
 
@@ -24,9 +29,6 @@ public class MainController implements Initializable {
 
     @FXML
     private Label campusLabel;
-
-    @FXML
-    private TableView<?> courseTableView;
 
     @FXML
     private Button finalizeButton;
@@ -101,7 +103,40 @@ public class MainController implements Initializable {
     private Button saturday8to12;
 
     @FXML
-    private TableView<?> sectionTableView;
+    private TableView<Section> sectionTableView;
+
+    @FXML
+    private TableColumn<Section, String> courseTitleColumn;
+
+    @FXML
+    private TableColumn<Section, String> campusColumn;
+
+    @FXML
+    private TableColumn<Section, String> instructionMethodColumn;
+
+    @FXML
+    private TableColumn<Section, String> partOfTermColumn;
+
+    @FXML
+    private TableView<Course> courseTableView;
+
+    @FXML
+    private TableColumn<Course, String> courseColumn;
+
+    @FXML
+    private TableColumn<Course, String> daysColumn;
+
+    @FXML
+    private TableColumn<Course, String> startTimeColumn;
+
+    @FXML
+    private TableColumn<Course, String> endTimeColumn;
+
+    @FXML
+    private TableColumn<Course, String> startDateColumn;
+
+    @FXML
+    private TableColumn<Course, String> endDateColumn;
 
     @FXML
     private Button sunday12to3;
@@ -180,6 +215,7 @@ public class MainController implements Initializable {
         instructorSet = InstructorSet.getInstance();
         initializeTimeSlotButtons();
         initializeSpinner();
+        initializeSectionTableView();
     }
 
     private void initializeSpinner() {
@@ -201,6 +237,53 @@ public class MainController implements Initializable {
                 {monday4to6, tuesday4to6, wednesday4to6, thursday4to6, friday4to6, saturday4to6, sunday4to6},
                 {monday6to10, tuesday6to10, wednesday6to10, thursday6to10, friday6to10, saturday6to10, sunday6to10}
         };
+    }
+
+    private void initializeSectionTableView() {
+        courseTitleColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCourseTitle()));
+        campusColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getCampus().toString()));
+        instructionMethodColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getInstructionMethod().toString()));
+        partOfTermColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getPartOfTerm().toString()));
+
+        ObservableList<Section> data = FXCollections.observableList(SectionSet.getInstance().toList());
+        sectionTableView.setItems(data);
+
+        sectionTableView.setRowFactory(tv -> {
+            TableRow<Section> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+                        && event.getClickCount() == 1) {
+
+                    Section clickedItem = row.getItem();
+                    initializeCourseTableView(clickedItem);
+                }
+            });
+            return row;
+        });
+    }
+
+    private void initializeCourseTableView(Section section) {
+        courseColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().toString()));
+        daysColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDays().stream().map(Day::toString).collect(Collectors.joining(", "))));
+        startTimeColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getTimeRange() == null || cellData.getValue().getTimeRange().getStart() == null) {
+                return new ReadOnlyStringWrapper("");
+            } else {
+                return new ReadOnlyStringWrapper(cellData.getValue().getTimeRange().getFormattedStart());
+            }
+        });
+        endTimeColumn.setCellValueFactory(cellData -> {
+            if (cellData.getValue().getTimeRange() == null || cellData.getValue().getTimeRange().getEnd() == null) {
+                return new ReadOnlyStringWrapper("");
+            } else {
+                return new ReadOnlyStringWrapper(cellData.getValue().getTimeRange().getFormattedEnd());
+            }
+        });
+        startDateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange().getFormattedStart()));
+        endDateColumn.setCellValueFactory(cellData -> new ReadOnlyStringWrapper(cellData.getValue().getDateRange().getFormattedEnd()));
+
+        ObservableList<Course> data = FXCollections.observableList(section.getCourseList());
+        courseTableView.setItems(data);
     }
 
     private void updateInstructor() {

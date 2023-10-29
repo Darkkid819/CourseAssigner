@@ -3,20 +3,23 @@ package com.excelparser.model;
 import com.excelparser.model.enums.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-public class Course implements Serializable {
+public class Course implements Comparable<Course>, Serializable {
 
     private String courseNumber;
     private Subject subject;
-    private Set<Day> days;
+    private List<Day> days;
     private TimeRange timeRange;
     private DateRange dateRange;
     private int credits;
+    private boolean hasLab;
 
 
-    public Course() { days = new HashSet<>(8); }
+    public Course() { days = new ArrayList<>(8); }
 
     private String formatCourseNumber(String input) { return String.format("%03d", Integer.parseInt(input));}
 
@@ -28,11 +31,11 @@ public class Course implements Serializable {
 
     public void setSubject(Subject subject) { this.subject = subject; }
 
-    public Set<Day> getDays() {
+    public List<Day> getDays() {
         return days;
     }
 
-    public void setDays(Set<Day> days) {
+    public void setDays(List<Day> days) {
         this.days = days;
     }
 
@@ -48,9 +51,18 @@ public class Course implements Serializable {
 
     public void setCredits(int credits) { this.credits = credits; }
 
+    public boolean hasLab() { return hasLab; }
+
+    public void setLab(boolean hasLab) { this.hasLab = hasLab; }
+
     @Override
     public String toString() {
-        return subject + formatCourseNumber(courseNumber);
+        return subject + formatCourseNumber(courseNumber) + (hasLab ? "L" : "");
+    }
+
+    @Override
+    public int compareTo(Course o) {
+        return this.toString().compareTo(o.toString());
     }
 }
 

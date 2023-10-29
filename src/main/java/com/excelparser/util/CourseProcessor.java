@@ -6,6 +6,7 @@ import com.excelparser.model.enums.*;
 import java.io.IOException;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -64,8 +65,8 @@ final class CourseProcessor {
         return course;
     }
 
-    private static Set<Day> processDays(String cell) {
-        HashSet<Day> days = new HashSet<>(8);
+    private static List<Day> processDays(String cell) {
+        List<Day> days = new ArrayList<>(8);
         char[] daysOfWeek = cell.toCharArray();
         for (char c: daysOfWeek) {
             String day = String.valueOf(c);

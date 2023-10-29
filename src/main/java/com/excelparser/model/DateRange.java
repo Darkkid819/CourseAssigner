@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class DateRange implements Serializable {
+    private transient final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("M/d/yyyy");
     private LocalDate start;
     private LocalDate end;
 
@@ -51,9 +52,13 @@ public class DateRange implements Serializable {
         this.end = end;
     }
 
+    public String getFormattedStart() { return start.format(FORMATTER); }
+
+    public String getFormattedEnd() { return end.format(FORMATTER); }
+
     @Override
     public String toString() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("M/d/yyyy");
-        return "DateRange [start=" + start.format(formatter) + ", end=" + end.format(formatter) + "]";
+
+        return "DateRange [start=" + start.format(FORMATTER) + ", end=" + end.format(FORMATTER) + "]";
     }
 }

@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.Optional;
 import java.util.TreeSet;
 
-public class InstructorSet implements Serializable, Cloneable {
+public class InstructorSet implements Serializable {
 
     private static class Holder {
         private static final InstructorSet INSTANCE = new InstructorSet();
@@ -40,12 +40,5 @@ public class InstructorSet implements Serializable, Cloneable {
             result.append("\n-----------------\n");
         }
         return result.toString();
-    }
-
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        InstructorSet cloned = (InstructorSet) super.clone();
-        cloned.instructorSet = new TreeSet<>(this.instructorSet);
-        return cloned;
     }
 }

@@ -183,11 +183,14 @@
                               <Label text="Sections" />
                               <TableView fx:id="sectionTableView">
                                 <columns>
-                                  <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="Course Title" />
-                                  <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="Campus" />
-                                    <TableColumn maxWidth="-1.0" minWidth="125.0" prefWidth="-1.0" resizable="false" text="Instruction Method" />
-                                    <TableColumn maxWidth="-1.0" minWidth="90.0" prefWidth="-1.0" resizable="false" text="Part of Term" />
+                                  <TableColumn fx:id="courseTitleColumn" maxWidth="500.0" minWidth="125.0" prefWidth="125.0" text="Course Title" />
+                                  <TableColumn fx:id="campusColumn" maxWidth="500.0" minWidth="75.0" prefWidth="-1.0" text="Campus" />
+                                    <TableColumn fx:id="instructionMethodColumn" maxWidth="500.0" minWidth="125.0" prefWidth="125.0" text="Instruction Method" />
+                                    <TableColumn fx:id="partOfTermColumn" maxWidth="500.0" minWidth="100.0" prefWidth="100.0" text="Part of Term" />
                                 </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
                               </TableView>
                            </children>
                            <HBox.margin>
@@ -199,13 +202,16 @@
                               <Label text="Courses" />
                               <TableView fx:id="courseTableView">
                                  <columns>
-                                    <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="Course" />
-                                    <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="Days" />
-                                    <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="Start Time" />
-                                    <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="End Time" />
-                                    <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="Start Date" />
-                                    <TableColumn maxWidth="-1.0" minWidth="75.0" prefWidth="-1.0" resizable="false" text="End Date" />
+                                    <TableColumn fx:id="courseColumn" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Course" />
+                                    <TableColumn fx:id="daysColumn" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Days" />
+                                    <TableColumn fx:id="startTimeColumn" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Start Time" />
+                                    <TableColumn fx:id="endTimeColumn" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="End Time" />
+                                    <TableColumn fx:id="startDateColumn" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="Start Date" />
+                                    <TableColumn fx:id="endDateColumn" maxWidth="500.0" minWidth="75.0" prefWidth="75.0" text="End Date" />
                                  </columns>
+                                 <columnResizePolicy>
+                                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                                 </columnResizePolicy>
                               </TableView>
                            </children>
                         </VBox>

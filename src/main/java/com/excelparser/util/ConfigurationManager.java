@@ -5,7 +5,6 @@ import java.nio.file.Paths;
 import java.util.Scanner;
 
 public final class ConfigurationManager {
-    private static Scanner scanner = new Scanner(System.in);
     private static String instructorPath;
     private static String coursePath;
     private static String frequencyPath;

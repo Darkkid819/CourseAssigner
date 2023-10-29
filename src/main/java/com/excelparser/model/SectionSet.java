@@ -1,6 +1,7 @@
 package com.excelparser.model;
 
 import java.io.Serializable;
+import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
 
@@ -26,6 +27,8 @@ public class SectionSet implements Serializable {
     public Optional<Section> search(int CRN) {
         return sectionSet.stream().filter(i -> i.getCRN() == (CRN)).findFirst();
     }
+
+    public List<Section> toList() { return sectionSet.stream().toList(); }
 
     public void copy(SectionSet instance) {
         this.sectionSet = instance.sectionSet;
