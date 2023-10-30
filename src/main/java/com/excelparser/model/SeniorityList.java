@@ -20,7 +20,7 @@ public class SeniorityList implements Serializable {
 
     private SeniorityList() {
         seniorityList = new LinkedList<>();
-        subList = seniorityList;
+        subList = new LinkedList<>();
     }
 
     public static SeniorityList getInstance() { return SeniorityList.Holder.INSTANCE; }
@@ -28,8 +28,11 @@ public class SeniorityList implements Serializable {
     public void add(Instructor instructor) { seniorityList.add(instructor); }
 
     public List<Instructor> getSubList(Predicate<Instructor> predicate) {
-        if (predicate == null) return seniorityList;
-        return seniorityList.stream().filter(predicate).collect(Collectors.toList());
+        return subList = seniorityList.stream().filter(predicate).collect(Collectors.toList());
+    }
+
+    public List<Instructor> getSubList() {
+        return subList.isEmpty() ? seniorityList : subList;
     }
 
     public List<Instructor> getSeniorityList() { return seniorityList; }

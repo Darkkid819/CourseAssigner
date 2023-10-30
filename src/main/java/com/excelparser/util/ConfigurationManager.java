@@ -11,6 +11,7 @@ public final class ConfigurationManager {
     private static final String SECTIONS_FILE = "./backup/sections.dat";
     private static final String INSTRUCTORS_FILE = "./backup/instructors.dat";
     private static final String SENIORITY_FILE = "./backup/seniority.dat";
+    private static final String OUTPUT_DIRECTORY = "./output/";
 
     private ConfigurationManager() {}
 
@@ -31,10 +32,6 @@ public final class ConfigurationManager {
         return frequencyPath;
     }
 
-    private static boolean isValidXLSXFilePath(String path) {
-        return Files.exists(Paths.get(path)) && path.toLowerCase().endsWith(".xlsx");
-    }
-
     public static boolean serializedFilesExist() {
         return Files.exists(Paths.get(SECTIONS_FILE))
                 && Files.exists(Paths.get(INSTRUCTORS_FILE))
@@ -51,5 +48,9 @@ public final class ConfigurationManager {
 
     public static String getSeniorityFile() {
         return SENIORITY_FILE;
+    }
+
+    public static String getOutputDirectory() {
+        return OUTPUT_DIRECTORY;
     }
 }

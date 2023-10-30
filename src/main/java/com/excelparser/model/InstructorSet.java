@@ -4,6 +4,7 @@ import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.LinkedList;
 import java.util.Optional;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class InstructorSet implements Serializable {
@@ -31,8 +32,11 @@ public class InstructorSet implements Serializable {
         return instructorSet.stream().filter(i -> i.getId().equals(id)).findFirst();
     }
 
+    public Set<Instructor> getInstructorSet() { return instructorSet; }
+
     public void copy(InstructorSet instance) {
         this.instructorSet = instance.instructorSet;
+        this.courseAssignment = instance.courseAssignment;
     }
 
     @Override

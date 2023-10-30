@@ -55,7 +55,7 @@ public class Section implements Comparable<Section>, Serializable {
     public List<Course> getCourseList() { return courseList.getCourseList(); }
 
     @Override
-    public String toString() { return courseTitle + " - " + CRN; }
+    public String toString() { return courseTitle + " - " + CRN + " " + courseList.getCourseList().get(0); }
 
     @Override
     public int compareTo(Section section) { return Integer.compare(this.CRN, section.CRN); }

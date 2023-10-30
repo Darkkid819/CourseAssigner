@@ -59,6 +59,22 @@ public class Course implements Comparable<Course>, Serializable {
 
     public void setAssigned(boolean isAssigned) { this.isAssigned = isAssigned; }
 
+    public String getFormattedToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append(subject)
+                .append(formatCourseNumber(courseNumber))
+                .append(hasLab ? "L" : "")
+                .append(" - ")
+                .append(credits)
+                .append(" credits - ")
+                .append(days)
+                .append(" - ")
+                .append(timeRange)
+                .append(" - ")
+                .append(dateRange);
+        return sb.toString();
+    }
+
     @Override
     public String toString() {
         return subject + formatCourseNumber(courseNumber) + (hasLab ? "L" : "");

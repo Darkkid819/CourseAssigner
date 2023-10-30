@@ -4,8 +4,8 @@ import com.excelparser.model.*;
 import com.excelparser.model.enums.Campus;
 import com.excelparser.model.enums.Day;
 import com.excelparser.model.enums.InstructionMethod;
-import com.excelparser.util.CourseParser;
-import com.excelparser.util.DataManager;
+import com.excelparser.util.*;
+import javafx.application.Platform;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -18,6 +18,7 @@ import javafx.scene.input.MouseButton;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
 import java.util.*;
@@ -217,16 +218,37 @@ public class MainController implements Initializable {
     @FXML
     private Button wednesday8to12;
 
+    @FXML
+    private Button addButton;
+
+    @FXML
+    private Button removeButton;
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         instructorSet = InstructorSet.getInstance();
         initializeTimeSlotButtons();
         initializeSpinner();
         initializeSectionTableView();
+        initializeButtons();
+    }
+
+    private void initializeButtons() {
+        if (InstructorSet.getInstance().courseAssignment > 3)
+            disableButtons();
+    }
+
+    private void disableButtons() {
+        finalizeButton.setDisable(true);
+        addButton.setDisable(true);
+        removeButton.setDisable(true);
     }
 
     private void initializeSpinner() {
-        ObservableList<Instructor> options = FXCollections.observableList(SeniorityList.getInstance().getSeniorityList());
+        List<Instructor> instructors = InstructorSet.getInstance().courseAssignment > 3 ?
+                SeniorityList.getInstance().getSeniorityList() :
+                SeniorityList.getInstance().getSubList();
+        ObservableList<Instructor> options = FXCollections.observableList(instructors);
         SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
         nameSpinner.setValueFactory(valueFactory);
         nameSpinner.valueProperty().addListener((observableValue, instructor, t1) -> {
@@ -417,6 +439,17 @@ public class MainController implements Initializable {
     private void updateInstructor() {
         List<Course> courses = nameSpinner.getValue().getAssignedCourses();
         assignedListView.getItems().setAll(courses);
+        assignedListView.setCellFactory(lv -> new ListCell<>() {
+            @Override
+            protected void updateItem(Course course, boolean empty) {
+                super.updateItem(course, empty);
+                if (empty || course == null) {
+                    setText(null);
+                } else {
+                    setText(course.getFormattedToString());
+                }
+            }
+        });
         nameLabel.setText(nameSpinner.getValue().getName().toString());
         idLabel.setText(nameSpinner.getValue().getId());
         rankLabel.setText(nameSpinner.getValue().getInstructorInfo().getRank().toString());
@@ -502,7 +535,6 @@ public class MainController implements Initializable {
         }
 
         if(currentInstructor.getAssignedCourses().size() >= InstructorSet.getInstance().courseAssignment) {
-            System.out.println(currentInstructor.getAssignedCourses());
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.setTitle("Course Limit Reached");
             alert.setHeaderText(null);
@@ -521,7 +553,6 @@ public class MainController implements Initializable {
                 .flatMap(section -> section.getCourseList().stream())
                 .filter(course -> course.equals(selectedCourse))
                 .findFirst();
-        System.out.println(courseInSet.isPresent());
         if (courseInSet.isPresent()) {
             courseInSet.get().setAssigned(asignment);
             currentInstructor.getAssignedCourses().stream()
@@ -537,7 +568,7 @@ public class MainController implements Initializable {
     void finalize(ActionEvent event) {
         boolean allAssigned = true;
 
-        for (Instructor instructor : SeniorityList.getInstance().getSeniorityList()) {
+        for (Instructor instructor : SeniorityList.getInstance().getSubList()) {
             if (instructor.getAssignedCourses().size() != InstructorSet.getInstance().courseAssignment) {
                 allAssigned = false;
                 break;
@@ -554,23 +585,29 @@ public class MainController implements Initializable {
         }
 
         InstructorSet.getInstance().courseAssignment++;
-        System.out.println(InstructorSet.getInstance().courseAssignment);
         if (InstructorSet.getInstance().courseAssignment > 3) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Finalized");
             alert.setHeaderText(null);
             alert.setContentText("All courses have been successfully assigned.");
             alert.showAndWait();
+            disableButtons();
+            String filePath = ConfigurationManager.getOutputDirectory() + FileNameUtil.generateFileName();
+            try {
+                WriterUtil.writeTo(filePath);
+            } catch (IOException e) {
+                System.err.println("Error writing to file: " + filePath);
+            }
+        } else {
+            // Update the nameSpinner with instructors having at least `coursesToBeAssigned` requested courses
+            List<Instructor> filteredInstructors = SeniorityList.getInstance().getSubList(
+                    instructor -> instructor.getCoursesRequested() >= InstructorSet.getInstance().courseAssignment
+            );
+            ObservableList<Instructor> options = FXCollections.observableList(filteredInstructors);
+            SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
+            nameSpinner.setValueFactory(valueFactory);
+            updateInstructor();
         }
-
-        // Update the nameSpinner with instructors having at least `coursesToBeAssigned` requested courses
-        List<Instructor> filteredInstructors = SeniorityList.getInstance().getSubList(
-                instructor -> instructor.getCoursesRequested() >= InstructorSet.getInstance().courseAssignment
-        );
-        ObservableList<Instructor> options = FXCollections.observableList(filteredInstructors);
-        SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
-        nameSpinner.setValueFactory(valueFactory);
-        updateInstructor();
     }
 
     @FXML
