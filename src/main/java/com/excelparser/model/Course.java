@@ -3,10 +3,7 @@ package com.excelparser.model;
 import com.excelparser.model.enums.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class Course implements Comparable<Course>, Serializable {
 
@@ -17,9 +14,12 @@ public class Course implements Comparable<Course>, Serializable {
     private DateRange dateRange;
     private int credits;
     private boolean hasLab;
+    private boolean isAssigned;
 
 
-    public Course() { days = new ArrayList<>(8); }
+    public Course() {
+        days = new ArrayList<>(8);
+    }
 
     private String formatCourseNumber(String input) { return String.format("%03d", Integer.parseInt(input));}
 
@@ -55,6 +55,10 @@ public class Course implements Comparable<Course>, Serializable {
 
     public void setLab(boolean hasLab) { this.hasLab = hasLab; }
 
+    public boolean isAssigned() { return isAssigned; }
+
+    public void setAssigned(boolean isAssigned) { this.isAssigned = isAssigned; }
+
     @Override
     public String toString() {
         return subject + formatCourseNumber(courseNumber) + (hasLab ? "L" : "");
@@ -63,6 +67,30 @@ public class Course implements Comparable<Course>, Serializable {
     @Override
     public int compareTo(Course o) {
         return this.toString().compareTo(o.toString());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Course course = (Course) o;
+
+        if (credits != course.credits) return false;
+        if (!this.toString().equals(course.toString())) return false;
+        if (!days.equals(course.days)) return false;
+        if (!timeRange.equals(course.timeRange)) return false;
+        return dateRange.equals(course.dateRange);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = toString().hashCode();
+        result = 31 * result + days.hashCode();
+        result = 31 * result + timeRange.hashCode();
+        result = 31 * result + dateRange.hashCode();
+        result = 31 * result + credits;
+        return result;
     }
 }
 

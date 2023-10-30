@@ -4,6 +4,7 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
@@ -45,7 +46,7 @@
                         <Insets left="14.0" />
                      </VBox.margin>
                   </Spinner>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" VBox.vgrow="ALWAYS">
+                  <ScrollPane fitToHeight="true" fitToWidth="true" nodeOrientation="RIGHT_TO_LEFT" VBox.vgrow="ALWAYS">
                      <content>
                         <VBox alignment="TOP_CENTER" spacing="30.0">
                            <children>
@@ -61,6 +62,7 @@
                         </VBox>
                      </content>
                   </ScrollPane>
+                  <ListView fx:id="assignedListView" prefHeight="200.0" prefWidth="200.0" />
                </children>
                <BorderPane.margin>
                   <Insets />
@@ -169,7 +171,7 @@
                               </Button>
                            </children>
                         </HBox>
-                        <Button fx:id="finalizeButton" contentDisplay="RIGHT" disable="true" mnemonicParsing="false" onAction="#finalize" text="Finalize">
+                        <Button fx:id="finalizeButton" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#finalize" text="Finalize">
                            <graphic>
                               <FontIcon iconLiteral="fas-check" iconSize="18" />
                            </graphic>

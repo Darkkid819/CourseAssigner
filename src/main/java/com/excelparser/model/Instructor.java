@@ -2,6 +2,7 @@ package com.excelparser.model;
 
 import java.io.Serializable;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
 
 public class Instructor implements Comparable<Instructor>, Serializable {
@@ -13,11 +14,13 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     private boolean[][] availability;
     private final int PERIOD = 6, DAYS = 7;
     private Frequencies frequencies;
+    private CourseList assignedCourses;
 
     // need to use setters to set the values of the other fields
     public Instructor(String id) {
         this.ID = id;
         this.availability = new boolean[PERIOD][DAYS];
+        assignedCourses = new CourseList();
     }
 
     public String getId() {
@@ -63,6 +66,18 @@ public class Instructor implements Comparable<Instructor>, Serializable {
     public void setFrequencies(Frequencies frequencies) { this.frequencies = frequencies; }
 
     public Frequencies getFrequencies() { return frequencies; }
+
+    public void assignCourse(Course course) {
+        course.setAssigned(true);
+        assignedCourses.add(course);
+    }
+
+    public void removeCourse(Course course) {
+        course.setAssigned(false);
+        assignedCourses.remove(course);
+    }
+
+    public List<Course> getAssignedCourses() { return assignedCourses.getCourseList(); }
 
     @Override
     public String toString() {

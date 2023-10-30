@@ -92,4 +92,22 @@ public class TimeRange implements Serializable {
         // initialize transient variable
         FORMATTER = DateTimeFormatter.ofPattern("h:mm a");
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        TimeRange timeRange = (TimeRange) o;
+
+        if (!start.equals(timeRange.start)) return false;
+        return end.equals(timeRange.end);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = start.hashCode();
+        result = 31 * result + end.hashCode();
+        return result;
+    }
 }

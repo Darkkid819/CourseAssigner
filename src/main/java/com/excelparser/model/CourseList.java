@@ -17,6 +17,8 @@ class CourseList implements Serializable {
         courseList.add(course);
     }
 
+    void remove(Course course) { courseList.remove(course); }
+
     List<Course> getCourseList() {
         return courseList;
     }

@@ -1,6 +1,8 @@
 package com.excelparser.model;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
+import java.util.LinkedList;
 import java.util.Optional;
 import java.util.TreeSet;
 
@@ -10,6 +12,8 @@ public class InstructorSet implements Serializable {
         private static final InstructorSet INSTANCE = new InstructorSet();
     }
     private TreeSet<Instructor> instructorSet;
+
+    public int courseAssignment = 1;
 
     private InstructorSet() {
         instructorSet = new TreeSet<>();

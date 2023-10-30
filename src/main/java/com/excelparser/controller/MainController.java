@@ -4,6 +4,8 @@ import com.excelparser.model.*;
 import com.excelparser.model.enums.Campus;
 import com.excelparser.model.enums.Day;
 import com.excelparser.model.enums.InstructionMethod;
+import com.excelparser.util.CourseParser;
+import com.excelparser.util.DataManager;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.ReadOnlyStringWrapper;
 import javafx.collections.FXCollections;
@@ -141,6 +143,9 @@ public class MainController implements Initializable {
     private TableColumn<Course, String> endDateColumn;
 
     @FXML
+    private ListView<Course> assignedListView;
+
+    @FXML
     private Button sunday12to3;
 
     @FXML
@@ -221,7 +226,7 @@ public class MainController implements Initializable {
     }
 
     private void initializeSpinner() {
-        ObservableList<Instructor> options = SeniorityList.getInstance().toObservableList();
+        ObservableList<Instructor> options = FXCollections.observableList(SeniorityList.getInstance().getSeniorityList());
         SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
         nameSpinner.setValueFactory(valueFactory);
         nameSpinner.valueProperty().addListener((observableValue, instructor, t1) -> {
@@ -410,6 +415,8 @@ public class MainController implements Initializable {
     }
 
     private void updateInstructor() {
+        List<Course> courses = nameSpinner.getValue().getAssignedCourses();
+        assignedListView.getItems().setAll(courses);
         nameLabel.setText(nameSpinner.getValue().getName().toString());
         idLabel.setText(nameSpinner.getValue().getId());
         rankLabel.setText(nameSpinner.getValue().getInstructorInfo().getRank().toString());
@@ -463,16 +470,126 @@ public class MainController implements Initializable {
 
     @FXML
     void addCourse(ActionEvent event) {
+        Course selectedCourse = courseTableView.getSelectionModel().getSelectedItem();
 
+        if (selectedCourse == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Course Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a course from the table.");
+            alert.showAndWait();
+            return;
+        }
+
+        if (selectedCourse.isAssigned()) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Course Already Assigned");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected course is already assigned. Please choose another course.");
+            alert.showAndWait();
+            return;
+        }
+
+        Instructor currentInstructor = nameSpinner.getValue();
+
+        if (currentInstructor == null) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Instructor Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select an instructor.");
+            alert.showAndWait();
+            return;
+        }
+
+        if(currentInstructor.getAssignedCourses().size() >= InstructorSet.getInstance().courseAssignment) {
+            System.out.println(currentInstructor.getAssignedCourses());
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Course Limit Reached");
+            alert.setHeaderText(null);
+            alert.setContentText("The selected instructor has reached the limit for this round of assignments.");
+            alert.showAndWait();
+            return;
+        }
+
+        currentInstructor.assignCourse(selectedCourse);
+        updateCourse(selectedCourse, currentInstructor, true);
+    }
+
+    private void updateCourse(Course selectedCourse, Instructor currentInstructor, boolean asignment) {
+        SectionSet sectionSet = SectionSet.getInstance();
+        Optional<Course> courseInSet = sectionSet.getSectionSet().stream()
+                .flatMap(section -> section.getCourseList().stream())
+                .filter(course -> course.equals(selectedCourse))
+                .findFirst();
+        System.out.println(courseInSet.isPresent());
+        if (courseInSet.isPresent()) {
+            courseInSet.get().setAssigned(asignment);
+            currentInstructor.getAssignedCourses().stream()
+                    .filter(course -> course.equals(selectedCourse))
+                    .findFirst()
+                    .ifPresent(course -> course.setAssigned(asignment));
+        }
+
+        assignedListView.getItems().setAll(currentInstructor.getAssignedCourses());
     }
 
     @FXML
     void finalize(ActionEvent event) {
+        boolean allAssigned = true;
 
+        for (Instructor instructor : SeniorityList.getInstance().getSeniorityList()) {
+            if (instructor.getAssignedCourses().size() != InstructorSet.getInstance().courseAssignment) {
+                allAssigned = false;
+                break;
+            }
+        }
+
+        if (!allAssigned) {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Incomplete Assignments");
+            alert.setHeaderText(null);
+            alert.setContentText("Not all instructors have the required number of courses assigned.");
+            alert.showAndWait();
+            return;
+        }
+
+        InstructorSet.getInstance().courseAssignment++;
+        System.out.println(InstructorSet.getInstance().courseAssignment);
+        if (InstructorSet.getInstance().courseAssignment > 3) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Finalized");
+            alert.setHeaderText(null);
+            alert.setContentText("All courses have been successfully assigned.");
+            alert.showAndWait();
+        }
+
+        // Update the nameSpinner with instructors having at least `coursesToBeAssigned` requested courses
+        List<Instructor> filteredInstructors = SeniorityList.getInstance().getSubList(
+                instructor -> instructor.getCoursesRequested() >= InstructorSet.getInstance().courseAssignment
+        );
+        ObservableList<Instructor> options = FXCollections.observableList(filteredInstructors);
+        SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
+        nameSpinner.setValueFactory(valueFactory);
+        updateInstructor();
     }
 
     @FXML
     void removeCourse(ActionEvent event) {
+        Course selectedCourse = assignedListView.getSelectionModel().getSelectedItem();
 
+        if (selectedCourse != null) {
+            Instructor currentInstructor = nameSpinner.getValue();
+
+            if (currentInstructor != null) {
+                currentInstructor.removeCourse(selectedCourse);
+                updateCourse(selectedCourse, currentInstructor, false);
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("No Course Selected");
+            alert.setHeaderText(null);
+            alert.setContentText("Please select a course from the list.");
+            alert.showAndWait();
+        }
     }
 }

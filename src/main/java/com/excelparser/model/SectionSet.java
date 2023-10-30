@@ -1,8 +1,10 @@
 package com.excelparser.model;
 
+import java.io.ObjectStreamException;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.TreeSet;
 
 public class SectionSet implements Serializable {
@@ -29,6 +31,8 @@ public class SectionSet implements Serializable {
     }
 
     public List<Section> toList() { return sectionSet.stream().toList(); }
+
+    public Set<Section> getSectionSet() { return sectionSet; }
 
     public void copy(SectionSet instance) {
         this.sectionSet = instance.sectionSet;
