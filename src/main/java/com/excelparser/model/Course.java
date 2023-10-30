@@ -95,8 +95,8 @@ public class Course implements Comparable<Course>, Serializable {
         if (credits != course.credits) return false;
         if (!this.toString().equals(course.toString())) return false;
         if (!days.equals(course.days)) return false;
-        if (!timeRange.equals(course.timeRange)) return false;
-        return dateRange.equals(course.dateRange);
+        if (!Objects.equals(timeRange, course.timeRange)) return false;
+        return Objects.equals(dateRange, course.dateRange);
     }
 
     @Override

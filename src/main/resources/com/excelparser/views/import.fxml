@@ -19,7 +19,7 @@
          <children>
             <VBox alignment="TOP_CENTER" spacing="50.0">
                <children>
-                  <Label id="import-label" text="Please Import Data" />
+                  <Label styleClass="header-label" text="Please Import Data" />
                   <GridPane alignment="CENTER" vgap="25.0">
                     <columnConstraints>
                       <ColumnConstraints hgrow="SOMETIMES" percentWidth="0.0" prefWidth="300.0" />

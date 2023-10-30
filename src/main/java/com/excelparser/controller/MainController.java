@@ -26,9 +26,6 @@ import java.util.stream.Collectors;
 
 public class MainController implements Initializable {
 
-    private static final String AVAILABLE_COLOR = "#008000";
-    private static final String UNAVAILABLE_COLOR = "#EB4034";
-
     InstructorSet instructorSet;
     private Button[][] timeSlotButtons;
 
@@ -469,7 +466,15 @@ public class MainController implements Initializable {
     }
 
     private void updateButtonColor(Button button, boolean available) {
-        button.setStyle("-fx-background-color: " + (available ? AVAILABLE_COLOR : UNAVAILABLE_COLOR) + ";");
+        if (available) {
+            button.getStyleClass().clear();
+            button.getStyleClass().remove("button-unavailable");
+            button.getStyleClass().add("button-available");
+        } else {
+            button.getStyleClass().clear();
+            button.getStyleClass().remove("button-available");
+            button.getStyleClass().add("button-unavailable");
+        }
     }
 
     public void searchByID() {
@@ -598,6 +603,11 @@ public class MainController implements Initializable {
             } catch (IOException e) {
                 System.err.println("Error writing to file: " + filePath);
             }
+            List<Instructor> instructors = SeniorityList.getInstance().getSeniorityList();
+            ObservableList<Instructor> options = FXCollections.observableList(instructors);
+            SpinnerValueFactory<Instructor> valueFactory = new SpinnerValueFactory.ListSpinnerValueFactory<>(options);
+            nameSpinner.setValueFactory(valueFactory);
+            updateInstructor();
         } else {
             // Update the nameSpinner with instructors having at least `coursesToBeAssigned` requested courses
             List<Instructor> filteredInstructors = SeniorityList.getInstance().getSubList(

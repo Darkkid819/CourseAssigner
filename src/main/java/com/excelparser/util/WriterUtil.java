@@ -42,7 +42,7 @@ public final class WriterUtil {
 
             for (Course course : allCourses) {
                 if (!assignedCourses.contains(course) && !course.isAssigned()) {
-                    writer.write("\t" + course.toString() + "\n");
+                    writer.write("\t" + course.getFormattedToString() + "\n");
                 }
             }
 
