@@ -1,48 +1,53 @@
-# Instructor Data Parsing Program README
+# Course Assigner
 
-This Java program is designed to parse instructor data from a CSV file, manipulate it, and store it as Instructor objects in an ArrayList. It can handle CSV files containing instructor information, and it is designed to work regardless of the number of instructors listed in the original data. Below, it's explained how the program extracts data and the key components of the program.
+The Instructors Course Assigner is a JavaFX application designed to facilitate the assignment of courses to instructors. With the ability to import extensive data, this tool is invaluable for educational institutions and departments looking to streamline the course assignment process.
 
-## Program Structure
+## Features
 
-The program consists of three main classes:
+- **Excel Data Import**: Seamlessly import data regarding instructors, their respective courses, and other related details using Apache POI.
+- **Course & Section Information**: Get a detailed breakdown of courses and their respective sections.
+- **Instructors' Teaching History**: Analyze the recent courses taught by instructors along with the frequency.
+- **Smart Course Assignment**: The application intelligently assigns courses to instructors, taking into consideration various factors.
+- **Filter & Sort**: Courses are filtered and sorted based on specified criteria to ensure the best match.
 
-1. **com.excelparser.Main**: The main class contains the program's entry point. It allows users to provide a CSV file path as a command-line argument or enter it manually in the console.
+## Prerequisites
 
-2. **com.excelparser.model.InstructorSet**: This class manages a list of Instructor objects and provides methods to add instructors and display their data.
+- Java Development Kit (JDK)
+- Apache Maven
+- IntelliJ IDEA (recommended)
 
-3. **com.excelparser.model.Parser**: The com.excelparser.model.Parser class is responsible for reading and parsing the CSV file, extracting instructor data based on specific cell indexes, and populating Instructor objects.
+## How to Build
 
-## Data Extraction
+1. **Clone the Repository**:
+   ```bash
+   git clone https://github.com/Darkkid819/ExcelParser
+   ```
 
-### Parsing CSV Data
+2. **Navigate to Project Directory**:
+   ```bash
+   cd ExcelParser
+   ```
 
-The program reads a CSV file, where each instructor's data is separated by a line starting with "—". It starts parsing the data after the first "—" symbol. The data for each instructor includes multiple lines containing various fields.
+3. **Build with Maven**:
+   ```bash
+   mvn clean install
+   ```
 
-### Data Fields Extraction
+4. **Open in IntelliJ IDEA**:
+    - Launch IntelliJ IDEA.
+    - Choose "Open" and navigate to the project directory.
+    - Let IntelliJ IDEA load the project and download the necessary dependencies.
 
-The program extracts instructor data using a specific approach that considers the structure of the CSV file. It identifies data based on its position within the CSV structure. Each field is extracted by analyzing its position relative to the structure, without relying on explicit indices.
-
-## Usage
-
-To use the program, follow these steps:
-
-1. Compile the Java source files.
-
-2. Run the program using the following command: java com.excelparser.Main [CSV_FILE_PATH]
-
-Replace `[CSV_FILE_PATH]` with the path to your CSV file. If you don't provide a file path, the program will prompt you to enter it manually.
-
-3. The program will parse the data, create Instructor objects, and display the instructor information in an organized manner.
+5. **Run the Application**:
+    - Once the project is loaded, right-click on the `Main` class in the project explorer.
+    - Choose `Run 'Main'` to start the application.
 
 ## Dependencies
 
-This program uses standard Java libraries and does not require any external dependencies.
+- [JavaFX](https://openjfx.io/)
+- [Apache POI](https://poi.apache.org/)
+- [ikonli](https://kordamp.org/ikonli/)
 
-## Note
+## License
 
-Make sure your CSV file follows the format specified in the program to ensure accurate parsing.
-
----
-
-Author: Jordan Mitacek
-Date: 9/6/23
+[MIT License](LICENSE.md)

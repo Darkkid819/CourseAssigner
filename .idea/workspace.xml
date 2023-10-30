@@ -4,18 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="it works :)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/instructors.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/sections.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backup/seniority.dat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/output/3fc68093_10_30_2023.txt" beforeDir="false" afterPath="$PROJECT_DIR$/output/3fe60281_10_30_2023.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/model/Course.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/excelparser/util/WriterUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/excelparser/util/WriterUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/import.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/import.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/excelparser/views/main.fxml" afterDir="false" />
+    <list default="true" id="aa1b5fb7-9f30-478a-be05-ac96e9a77288" name="Changes" comment="1.0 version">
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -124,7 +114,7 @@
       <workItem from="1698433211592" duration="2197000" />
       <workItem from="1698521674465" duration="28791000" />
       <workItem from="1698596356847" duration="27443000" />
-      <workItem from="1698630113857" duration="21428000" />
+      <workItem from="1698630113857" duration="22097000" />
     </task>
     <task id="LOCAL-00001" summary="gui">
       <option name="closed" value="true" />
@@ -254,7 +244,15 @@
       <option name="project" value="LOCAL" />
       <updated>1698639576856</updated>
     </task>
-    <option name="localTasksCounter" value="17" />
+    <task id="LOCAL-00017" summary="1.0 version">
+      <option name="closed" value="true" />
+      <created>1698651876714</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1698651876715</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -288,6 +286,7 @@
     <MESSAGE value="filtered and sorted sections/courses" />
     <MESSAGE value="assignment checkpoint" />
     <MESSAGE value="it works :)" />
-    <option name="LAST_COMMIT_MESSAGE" value="it works :)" />
+    <MESSAGE value="1.0 version" />
+    <option name="LAST_COMMIT_MESSAGE" value="1.0 version" />
   </component>
 </project>
