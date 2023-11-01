@@ -548,8 +548,37 @@ public class MainController implements Initializable {
             return;
         }
 
+        for (Course assignedCourse : currentInstructor.getAssignedCourses()) {
+            if (coursesOverlap(selectedCourse, assignedCourse)) {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Time Overlap Detected");
+                alert.setHeaderText(null);
+                alert.setContentText("The selected course time overlaps with another course assigned to this instructor or there's less than a 15-minute gap between them.");
+                alert.showAndWait();
+                return;
+            }
+        }
+
         currentInstructor.assignCourse(selectedCourse);
         updateCourse(selectedCourse, currentInstructor, true);
+    }
+
+    private boolean coursesOverlap(Course course1, Course course2) {
+        for (Day day1 : course1.getDays()) {
+            for (Day day2 : course2.getDays()) {
+                if (day1.equals(day2)) {  // If courses are on the same day
+                    TimeRange tr1 = course1.getTimeRange();
+                    TimeRange tr2 = course2.getTimeRange();
+
+                    if ((tr1.getStart().isBefore(tr2.getEnd()) && tr1.getEnd().isAfter(tr2.getStart()))
+                            || (tr1.getEnd().isBefore(tr2.getStart()) && (tr1.getEnd().plusMinutes(15).isAfter(tr2.getStart()) || tr1.getEnd().equals(tr2.getStart())))
+                            || (tr2.getEnd().isBefore(tr1.getStart()) && (tr2.getEnd().plusMinutes(15).isAfter(tr1.getStart()) || tr2.getEnd().equals(tr1.getStart())))) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     private void updateCourse(Course selectedCourse, Instructor currentInstructor, boolean asignment) {
